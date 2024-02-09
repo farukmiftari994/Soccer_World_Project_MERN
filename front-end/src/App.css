@@ -1,0 +1,97 @@
+body {
+  background-image: url("./img/shutterstock_1359272279.jpg");
+  background-size: 100% 270px;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+}
+
+.content {
+  background-color: rgba(194, 209, 235, 0.537);
+  margin-top: 161px;
+  padding: 0 20px;
+  border-bottom: 3px solid black;
+}
+
+.containers {
+  background-color: rgba(184, 195, 216, 0.537);
+  height: 100vh;
+}
+
+.siteMenu {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  justify-content: space-around;
+  width: 100%;
+  transition: all 0.5s;
+  border-bottom: 2px solid black;
+  height: 50px;
+  overflow-x: hidden;
+}
+
+.link {
+  display: flex;
+  justify-content: space-around;
+  color: white;
+  padding-top: 10px;
+  transition: all 0.5s;
+  text-decoration: none;
+}
+
+.link:hover {
+  background-color: rgba(100, 124, 164, 0.537);
+  color: black;
+  transition: all 0.5s;
+}
+
+.siteMenu > .active {
+  background-color: rgba(100, 124, 164, 0.537);
+  color: #000;
+}
+
+.link_text {
+  font-size: 20px;
+  padding: 0 140px;
+}
+
+.content-container {
+  padding-top: 60px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.tab-container {
+  width: 50%;
+}
+
+.nav-item > button {
+  width: 200px;
+}
+
+svg {
+  color: black;
+  font-size: 25px;
+  margin: 0;
+}
+
+.dropstart {
+  background-color: none;
+}
+
+.dropstart > button {
+  background-color: transparent;
+  border: none;
+}
+
+.dropstart > button::before {
+  display: none !important;
+}
+
+.dropstart > button:hover {
+  background-color: transparent !important;
+}
+
+.icon:hover {
+  color: rgba(78, 164, 230, 0.807);
+}
