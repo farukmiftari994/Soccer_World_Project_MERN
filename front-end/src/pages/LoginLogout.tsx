@@ -21,7 +21,6 @@ function LoginLogout() {
           <Tab eventKey="home" title="SIGN UP">
             <AuthForm submitTitle="Sign Up" submit={signup} />
           </Tab>
-          <Tab eventKey="house" title="PROFILE"></Tab>
         </Tabs>
       </div>
     </div>

@@ -14,6 +14,6 @@ userRouter.get("/all", getUsers);
 
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
-userRouter.post("/update", updateUser);
+userRouter.post("/update/:id", updateUser);
 
 export default userRouter;

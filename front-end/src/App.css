@@ -2,7 +2,6 @@ body {
   background-image: url("./img/shutterstock_1359272279.jpg");
   background-size: 100% 270px;
   background-repeat: no-repeat;
-  overflow-y: hidden;
 }
 
 .content {

@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import { UserModel } from "../models/userModel.js";
 
 const getUsers = async (req, res) => {
@@ -65,8 +66,21 @@ const login = async (req, res) => {
   }
 };
 
-const updateUser = (req, res) => {
-  res.send("update user controller working");
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const valid = isValidObjectId(id);
+  console.log(valid);
+  if (!valid) return res.status(400).json({ error: "ID MISSING" });
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatedUser) return res.status(404).json({ error: "User not found" });
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
 };
 
 export { getUsers, getUserByEmail, signup, login, updateUser };

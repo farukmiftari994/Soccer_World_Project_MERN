@@ -8,9 +8,10 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function NavBar(): JSX.Element {
-  const loginLogout = [{ path: "/user", name: "user" }];
+  const loginLogout = [{ path: "/user" }];
   const { user, logout } = useContext(AuthContext);
   console.log("user :>> ", user);
+
   return (
     <div className="content">
       <Navbar>
@@ -37,7 +38,9 @@ function NavBar(): JSX.Element {
                       />
                     }
                   >
-                    <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                    <NavLink to={"/profile"} className="dropdown-item">
+                      Profile
+                    </NavLink>
                     <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
                   </DropdownButton>
                 </Dropdown>
