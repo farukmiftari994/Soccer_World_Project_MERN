@@ -1,34 +1,52 @@
+import colors from "colors";
 import express from "express";
 import cors from "cors";
 import userRouter from "./routes/userRoutes.js";
 import "dotenv/config";
 import mongoose from "mongoose";
-import { UserModel } from "./models/userModel.js";
+import playersRouter from "./routes/playersRoutes.js";
+// import { UserModel } from "./models/userModel.js";
 
 const app = express();
-const port = process.env.PORT || 5000;
 
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-app.use(cors());
+const addMiddlewares = () => {
+  app.use(express.json());
+  app.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
+  app.use(cors());
+};
 
-app.use("/api/users", userRouter);
-app.use("*", (req, res) =>
-  res.status(404).json({ error: "Endpoint not found." })
-);
+const addRoutes = () => {
+  app.use("/api/users", userRouter);
+  app.use("/api/players", playersRouter);
+  app.use("*", (req, res) =>
+    res.status(404).json({ error: "Endpoint not found." })
+  );
+};
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(port, () => {
-      console.log(
-        "Connection to MongoDB established, and server is running on port " +
-          port
-      );
-    });
-  })
-  .catch((err) => console.log(err));
+const startServer = () => {
+  const port = process.env.PORT || 5000;
+  app.listen(port, () => {
+    console.log(`Server is running in port :${port}`.bgRed);
+  });
+};
+
+const DBConnection = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Connection to MongoDB established".bgWhite);
+  } catch (error) {
+    console.log("error connecting to the MongoDB", error);
+  }
+};
+
+const startBackend = async () => {
+  await DBConnection();
+  addMiddlewares();
+  addRoutes();
+  startServer();
+};
+startBackend();

@@ -1,4 +1,5 @@
 import { PropsWithChildren, createContext, useState } from "react";
+import baseUrl from "../../utils/baseurl";
 
 interface AuthContextType {
   user: User | null;
@@ -7,7 +8,7 @@ interface AuthContextType {
   signup: (email: string, password: string) => Promise<void>;
   updateUser: (values: {
     email: string;
-    password: string | undefined;
+    username: string | undefined;
   }) => Promise<void>;
   // asyncronised function always return a promise
 
@@ -51,10 +52,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       body,
     };
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/users/signup",
-        options
-      );
+      const response = await fetch(`${baseUrl}/api/users/signup`, options);
       if (response.ok) {
         const result = (await response.json()) as User;
         setUser(result);
@@ -68,7 +66,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const login = async (email: string, password: string) => {
-    if (!user) return alert("There's no user with that email");
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -84,7 +81,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/login",
+        `${baseUrl}/api/users/login`,
         requestOptions
       );
       if (response.ok) {
@@ -93,6 +90,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       } else {
         const result = (await response.json()) as ResNotOk;
         console.log(result);
+        if (!user) return alert("Incorrect Email or Password");
       }
     } catch (error) {
       console.log(error);
@@ -105,7 +103,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const updateUser = async (values: {
     email: string;
-    password: string | undefined;
+    username: string | undefined;
   }) => {
     if (!user) return;
     const headers = new Headers();
@@ -118,7 +116,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     };
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/update/${user._id}`,
+        `${baseUrl}/api/users/update/${user._id}`,
         requestOptions
       );
       if (response.ok) {

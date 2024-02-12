@@ -3,7 +3,12 @@ import { UserModel } from "../models/userModel.js";
 
 const getUsers = async (req, res) => {
   try {
-    const allUsers = await UserModel.find({});
+    const allUsers = await UserModel.find({})
+      .select("-password")
+      .populate({
+        path: "player",
+        select: ["name", "value"],
+      });
     res.status(200).json(allUsers);
   } catch (e) {
     console.log(e);

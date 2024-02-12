@@ -1,6 +1,6 @@
 import Nav from "react-bootstrap/Nav";
 import { Button, Dropdown, DropdownButton, Navbar } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ function NavBar(): JSX.Element {
   const loginLogout = [{ path: "/user" }];
   const { user, logout } = useContext(AuthContext);
   console.log("user :>> ", user);
+  const location = useLocation();
 
   return (
     <div className="content">
@@ -25,21 +26,24 @@ function NavBar(): JSX.Element {
           {loginLogout.map((item, index) => (
             <NavLink to={item.path} key={index}>
               {!user ? (
-                <Button>LOGIN</Button>
+                <Button variant="outline-light">LOGIN</Button>
               ) : (
                 <Dropdown>
                   <DropdownButton
+                    variant="transparent"
                     drop="start"
                     title={
-                      <FontAwesomeIcon
-                        className="icon"
-                        icon={faUser}
-                        beatFade
-                      />
+                      <NavLink to={location.pathname}>
+                        <FontAwesomeIcon
+                          className="icon"
+                          icon={faUser}
+                          beatFade
+                        />
+                      </NavLink>
                     }
                   >
                     <NavLink to={"/profile"} className="dropdown-item">
-                      Profile
+                      {user.email}
                     </NavLink>
                     <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
                   </DropdownButton>

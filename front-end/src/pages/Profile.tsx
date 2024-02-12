@@ -17,7 +17,7 @@ function Profile() {
   if (user)
     return (
       <div className="d-flex  justify-content-center pt-5 mt-5">
-        <Form className="d-flex row w-50">
+        <Form className="d-flex row justify-content-center w-50">
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label className="pe-4">Current Email</Form.Label>
@@ -28,6 +28,7 @@ function Profile() {
               <Form.Label style={{ color: "blue" }}>{user.username}</Form.Label>
             </Form.Group>
           </Row>
+
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Change Email</Form.Label>
@@ -56,7 +57,6 @@ function Profile() {
               />
             </Form.Group>
           </Row>
-
           <Button variant="primary" onClick={handleSubmit}>
             Update
           </Button>

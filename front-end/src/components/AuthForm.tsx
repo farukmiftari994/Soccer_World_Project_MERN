@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Button, Form } from "react-bootstrap";
 
 type Props = {
   submitTitle: string;
@@ -13,7 +14,7 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputValues.email || !inputValues.password)
-      return alert("all fields must be included");
+      return alert("All fields must be included");
     submit(inputValues.email, inputValues.password);
   };
 
@@ -22,7 +23,7 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
   };
 
   return (
-    <form
+    <Form
       onSubmit={handleSubmit}
       style={{
         display: "flex",
@@ -31,20 +32,24 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
         gap: "1rem",
       }}
     >
-      <input
+      <Form.Control
         type="email"
         placeholder="Email"
         value={inputValues.email}
         onChange={handleChange}
+        style={{ width: "300px", fontSize: "14px" }}
       />
-      <input
+      <Form.Control
         type="password"
         placeholder="Password"
         value={inputValues.password}
         onChange={handleChange}
+        style={{ width: "300px", fontSize: "14px" }}
       />
-      <button type="submit">{loading ? "Loading..." : submitTitle}</button>
-    </form>
+      <Button type="submit" style={{ width: "200px", fontSize: "14px" }}>
+        {loading ? "Loading..." : submitTitle}
+      </Button>
+    </Form>
   );
 };
 

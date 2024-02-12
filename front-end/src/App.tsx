@@ -9,6 +9,7 @@ import LoginLogout from "./pages/LoginLogout.tsx";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
 import Profile from "./pages/Profile.tsx";
 import NavBar from "./components/NavBar.tsx";
+import CreatePlayer from "./pages/CreatePlayer.tsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route>
                 <Route path="/profile" element={<Profile />} />
               </Route>
+              <Route path="/create" element={<CreatePlayer />} />
               <Route path="/user" element={<LoginLogout />} />
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />

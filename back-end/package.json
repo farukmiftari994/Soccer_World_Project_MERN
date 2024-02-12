@@ -12,6 +12,8 @@
   "author": "Faruk",
   "license": "ISC",
   "dependencies": {
+    "color": "^4.2.3",
+    "colors": "^1.4.0",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",

@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 
 function LoginLogout() {
   const { user, login, signup } = useContext(AuthContext);
-  if (user) return <Navigate to={"/"} />;
+  if (user) return <Navigate to={"/create"} />;
   return (
     <div className="content-container">
       <div className="tab-container">
