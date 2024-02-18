@@ -3,20 +3,30 @@ import baseUrl from "../../utils/baseurl";
 
 interface AuthContextType {
   user: User | null;
+  player: Player | undefined;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   signup: (email: string, password: string) => Promise<void>;
   updateUser: (values: {
     email: string;
     username: string | undefined;
+    players?: string | undefined;
   }) => Promise<void>;
+  // updatePlayer: (values: { name: string; value: string }) => Promise<void>;
   // asyncronised function always return a promise
+  createPlayer: (values: {
+    name: string;
+    value: string;
+    playerOwner?: string;
+  }) => Promise<void>;
+  updateUserWithPlayer: (playerId: string, userId: string) => Promise<void>;
 
   loading: boolean;
 }
 
 const defaultValue: AuthContextType = {
   user: null,
+  player: undefined,
   login: () => {
     throw new Error("no provider");
   },
@@ -29,6 +39,15 @@ const defaultValue: AuthContextType = {
   updateUser: () => {
     throw new Error("no provider");
   },
+  // updatePlayer: () => {
+  //   throw new Error("no provider");
+  // },
+  createPlayer: () => {
+    throw new Error("no provider");
+  },
+  updateUserWithPlayer: () => {
+    throw new Error("no provider");
+  },
   loading: false,
 };
 
@@ -36,8 +55,8 @@ export const AuthContext = createContext(defaultValue);
 
 export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
+  const [player, setPlayer] = useState<Player | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  console.log("children :>> ", children);
 
   const signup = async (email: string, password: string) => {
     if (!email || !password) return alert("ALL field must be included");
@@ -104,6 +123,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const updateUser = async (values: {
     email: string;
     username: string | undefined;
+    players?: string | undefined;
   }) => {
     if (!user) return;
     const headers = new Headers();
@@ -131,6 +151,69 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const createPlayer = async (values: {
+    name: string;
+    value: string;
+    playerOwner?: string;
+  }) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const body = JSON.stringify(values);
+
+    const options = {
+      method: "POST",
+      headers,
+      body,
+    };
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/players/createPlayer`,
+        options
+      );
+      if (response.ok) {
+        const result = (await response.json()) as Player;
+        console.log("the result :>> ", result);
+        setPlayer(result);
+      } else {
+        const result = (await response.json()) as ResNotOk;
+        console.log(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUserWithPlayer = async (playerId: string, userId: string) => {
+    // if (!user && !player) return;
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
+    const body = new URLSearchParams();
+    body.append("playerId", playerId);
+    body.append("userId", userId);
+    var options = {
+      method: "PATCH",
+      headers,
+      body,
+    };
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/users/updateUserList`,
+        options
+      );
+      if (response.ok) {
+        const result = await response.json();
+        console.log("result :>> ", result);
+        // setPlayer(result);
+      } else {
+        const result = await response.json();
+        console.log(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -140,6 +223,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         signup,
         loading,
         updateUser,
+        createPlayer,
+        updateUserWithPlayer,
+        player,
       }}
     >
       {children}

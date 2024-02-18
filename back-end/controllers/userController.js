@@ -1,14 +1,13 @@
 import { isValidObjectId } from "mongoose";
 import { UserModel } from "../models/userModel.js";
+import PlayersModel from "../models/playersModel.js";
 
 const getUsers = async (req, res) => {
   try {
-    const allUsers = await UserModel.find({})
-      .select("-password")
-      .populate({
-        path: "player",
-        select: ["name", "value"],
-      });
+    const allUsers = await UserModel.find({}).select("-password");
+    // .populate({
+    //   path: "players",
+    // });
     res.status(200).json(allUsers);
   } catch (e) {
     console.log(e);
@@ -32,11 +31,16 @@ const getUserByEmail = async (req, res) => {
 
 const signup = async (req, res) => {
   console.log(req.body);
-  const { email, password, username } = req.body;
+  const { email, password, username, favPlayer } = req.body;
   if (!email || !password)
     return res.status(400).json({ error: "All fields must be included" });
   try {
-    const newUser = await UserModel.create({ email, password, username });
+    const newUser = await UserModel.create({
+      email,
+      password,
+      username,
+      favPlayer,
+    });
     console.log("newUser :>> ", newUser);
     if (newUser) res.status(201).json(newUser);
     else res.status(400).json({ error: "User couldnt be created" });
@@ -88,4 +92,33 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { getUsers, getUserByEmail, signup, login, updateUser };
+const updateUserList = async (req, res) => {
+  console.log("req.body :>> ", req.body);
+  const { userId, playerId } = req.body;
+  //! when we make this route authorize (sending the token in the request), we wont need to receive the ID in the request,
+  //! because we will receive the user information thanks to the Token and Passport
+
+  // UserModel.findByIdAndDelete(playerId);
+  try {
+    const updateUserWithPlayer = await UserModel.findByIdAndUpdate(
+      userId,
+      { $addToSet: { favPlayer: playerId } },
+      { new: true }
+    ).populate({ path: "favPlayer" });
+
+    const updatePlayerWithUser = await PlayersModel.findByIdAndUpdate(
+      playerId,
+      { playerOwner: userId },
+      { new: true }
+    ).populate({ path: "playerOwner" });
+
+    res.status(201).json({
+      updateUserWithPlayer,
+      updatePlayerWithUser,
+    });
+  } catch (error) {
+    console.log("error :>> ", error);
+  }
+};
+
+export { getUsers, getUserByEmail, signup, login, updateUser, updateUserList };

@@ -5,7 +5,6 @@ import userRouter from "./routes/userRoutes.js";
 import "dotenv/config";
 import mongoose from "mongoose";
 import playersRouter from "./routes/playersRoutes.js";
-// import { UserModel } from "./models/userModel.js";
 
 const app = express();
 

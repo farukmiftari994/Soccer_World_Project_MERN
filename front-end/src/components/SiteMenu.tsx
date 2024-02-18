@@ -13,12 +13,16 @@ function SiteMenu({ children }: { children: React.ReactNode }): JSX.Element {
       name: "About",
     },
     {
-      path: "/contact",
-      name: "Contact",
+      path: "/createPlayer",
+      name: "Add Player",
     },
     {
-      path: "/favourites",
-      name: "Favourites",
+      path: "/playerCards",
+      name: "All Players",
+    },
+    {
+      path: "/create",
+      name: "Create",
     },
   ];
   return (

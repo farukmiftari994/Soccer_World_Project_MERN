@@ -51,7 +51,7 @@ body {
 }
 
 .content-container {
-  padding-top: 260px;
+  padding-top: 60px;
   display: flex;
   justify-content: center;
 }
@@ -94,4 +94,9 @@ svg {
 .current-section {
   display: flex;
   justify-content: center !important;
+}
+
+.tab-content {
+  display: flex;
+  justify-content: center;
 }

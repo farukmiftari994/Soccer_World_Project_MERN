@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function NavBar(): JSX.Element {
-  const loginLogout = [{ path: "/user" }];
+  const loginLogout = [{ path: "/login" }];
   const { user, logout } = useContext(AuthContext);
   console.log("user :>> ", user);
   const location = useLocation();
@@ -42,7 +42,7 @@ function NavBar(): JSX.Element {
                       </NavLink>
                     }
                   >
-                    <NavLink to={"/profile"} className="dropdown-item">
+                    <NavLink to={"/user"} className="dropdown-item">
                       {user.email}
                     </NavLink>
                     <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
