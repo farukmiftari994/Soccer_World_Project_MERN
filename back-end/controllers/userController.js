@@ -94,7 +94,7 @@ const updateUser = async (req, res) => {
 
 const updateUserList = async (req, res) => {
   console.log("req.body :>> ", req.body);
-  const { userId, playerId } = req.body;
+  const { userId, playerId, name, value } = req.body;
   //! when we make this route authorize (sending the token in the request), we wont need to receive the ID in the request,
   //! because we will receive the user information thanks to the Token and Passport
 
@@ -102,7 +102,16 @@ const updateUserList = async (req, res) => {
   try {
     const updateUserWithPlayer = await UserModel.findByIdAndUpdate(
       userId,
-      { $addToSet: { favPlayer: playerId } },
+      {
+        $addToSet: {
+          favPlayer: {
+            _id: playerId,
+            name: name,
+            value: value,
+          },
+        },
+      },
+
       { new: true }
     ).populate({ path: "favPlayer" });
 

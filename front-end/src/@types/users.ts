@@ -3,7 +3,7 @@ interface User {
   email: string;
   username?: string;
   createdAt: string;
-  player?: string;
+  favPlayer?: string;
 }
 
 interface Player {

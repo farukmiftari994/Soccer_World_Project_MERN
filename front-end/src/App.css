@@ -12,6 +12,8 @@ body {
 }
 
 .containers {
+  /* background-image: url("./img/football-stadium-night-generative-ai.jpg");
+  background-repeat: no-repeat; */
   background-color: rgba(184, 195, 216, 0.537);
   height: 100vh;
 }

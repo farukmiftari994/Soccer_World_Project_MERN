@@ -1,11 +1,23 @@
 import mongoose from "mongoose";
 
+// const playerSchema = new mongoose.Schema({
+//   _id: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
+//   name: String,
+//   value: String,
+// });
+
 const userSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     username: String,
-    favPlayer: [{ type: mongoose.Schema.Types.ObjectId, ref: "players" }],
+    favPlayer: [
+      {
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
+        name: { type: mongoose.Schema.Types.String, ref: "players" },
+        value: { type: mongoose.Schema.Types.String, ref: "players" },
+      },
+    ],
   },
   { timestamps: true }
 );

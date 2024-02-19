@@ -4,13 +4,14 @@ import baseUrl from "../../utils/baseurl";
 interface AuthContextType {
   user: User | null;
   player: Player | undefined;
+  allUsers: () => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   signup: (email: string, password: string) => Promise<void>;
   updateUser: (values: {
     email: string;
     username: string | undefined;
-    players?: string | undefined;
+    favPlayer?: string | undefined;
   }) => Promise<void>;
   // updatePlayer: (values: { name: string; value: string }) => Promise<void>;
   // asyncronised function always return a promise
@@ -19,7 +20,12 @@ interface AuthContextType {
     value: string;
     playerOwner?: string;
   }) => Promise<void>;
-  updateUserWithPlayer: (playerId: string, userId: string) => Promise<void>;
+  updateUserWithPlayer: (
+    playerId: string,
+    userId: string,
+    playerName: string,
+    playerValue: string
+  ) => Promise<void>;
 
   loading: boolean;
 }
@@ -27,6 +33,9 @@ interface AuthContextType {
 const defaultValue: AuthContextType = {
   user: null,
   player: undefined,
+  allUsers: () => {
+    throw new Error("no provider");
+  },
   login: () => {
     throw new Error("no provider");
   },
@@ -57,6 +66,25 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [player, setPlayer] = useState<Player | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+
+  const allUsers = () => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const body = new URLSearchParams();
+    body.append("email", "");
+
+    const requestOptions = {
+      method: "GET",
+      headers,
+      body,
+    };
+
+    fetch("http://localhost:5000/api/users/all", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+  };
 
   const signup = async (email: string, password: string) => {
     if (!email || !password) return alert("ALL field must be included");
@@ -123,7 +151,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const updateUser = async (values: {
     email: string;
     username: string | undefined;
-    players?: string | undefined;
+    favPlayer?: string | undefined;
   }) => {
     if (!user) return;
     const headers = new Headers();
@@ -183,7 +211,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const updateUserWithPlayer = async (playerId: string, userId: string) => {
+  const updateUserWithPlayer = async (
+    playerId: string,
+    userId: string,
+    playerName: string,
+    playerValue: string
+  ) => {
     // if (!user && !player) return;
 
     const headers = new Headers();
@@ -191,6 +224,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     const body = new URLSearchParams();
     body.append("playerId", playerId);
     body.append("userId", userId);
+    body.append("name", playerName);
+    body.append("value", playerValue);
+
     var options = {
       method: "PATCH",
       headers,
@@ -218,14 +254,15 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     <AuthContext.Provider
       value={{
         user,
+        player,
+        loading,
+        allUsers,
         login,
         logout,
         signup,
-        loading,
         updateUser,
         createPlayer,
         updateUserWithPlayer,
-        player,
       }}
     >
       {children}

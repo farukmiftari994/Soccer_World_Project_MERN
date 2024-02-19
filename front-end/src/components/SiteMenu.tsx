@@ -17,7 +17,7 @@ function SiteMenu({ children }: { children: React.ReactNode }): JSX.Element {
       name: "Add Player",
     },
     {
-      path: "/playerCards",
+      path: "/allPlayers",
       name: "All Players",
     },
     {

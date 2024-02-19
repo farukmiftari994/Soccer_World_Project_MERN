@@ -17,7 +17,7 @@ interface Player {
     _id: string;
     email: string;
     username?: string;
-    players?: string;
+    favPlayer?: string;
   }[];
 }
 
@@ -60,7 +60,14 @@ function CreatePlayer() {
 
   const handleChange = async () => {
     console.log("playerId, user?._id :>> ", playerId, user?._id);
-    await updateUserWithPlayer(playerId, user?._id!);
+    if (selectedPlayer) {
+      await updateUserWithPlayer(
+        playerId,
+        user?._id!,
+        selectedPlayer.name,
+        selectedPlayer.value
+      );
+    }
   };
 
   const handlePlayerChange = (event: { target: { value: any } }) => {
@@ -87,7 +94,7 @@ function CreatePlayer() {
                 aria-label="Floating label select example"
                 onChange={handlePlayerChange}
               >
-                <option>Select Player</option>
+                <option key="default">Select Player</option>
                 {allPlayers &&
                   allPlayers.map((player) => {
                     return (
