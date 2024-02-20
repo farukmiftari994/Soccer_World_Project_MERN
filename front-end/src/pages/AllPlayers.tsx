@@ -8,7 +8,14 @@ type User = {
   favPlayer?: {
     _id: string;
     name: string;
-    value: string;
+    overall: string;
+    position: string;
+    pace: string;
+    shooting: string;
+    passing: string;
+    dribbling: string;
+    defense: string;
+    physicality: string;
     playerOwner: string;
   }[];
 };
@@ -46,7 +53,7 @@ const AllPlayers = () => {
               {user.favPlayer ? (
                 user.favPlayer.map((player) => (
                   <li key={player._id}>
-                    {player.name}: {player.value}
+                    {player.name}: {player.shooting}
                   </li>
                 ))
               ) : (

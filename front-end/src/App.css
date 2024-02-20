@@ -102,3 +102,54 @@ svg {
   display: flex;
   justify-content: center;
 }
+
+.cardContainer {
+  width: 230px;
+  height: 600px;
+  background-image: url("./img/PngItem_2198207.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: -30px 60px;
+}
+
+.cardContainer > h5 {
+  margin-top: 56px !important;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.ovr {
+  margin-top: 88px;
+  margin-left: 42px;
+  color: white;
+}
+
+.position {
+  margin-top: -6px;
+  margin-left: 42px;
+  color: white;
+}
+
+.ratings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  color: white;
+}
+
+.sho,
+.pas,
+.def,
+.phy {
+  margin-top: -7px;
+}
+
+img {
+  position: absolute;
+  width: 130px;
+  height: 180px;
+  margin-top: -147px;
+  margin-left: 80px;
+}

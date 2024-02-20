@@ -9,6 +9,13 @@ interface User {
 interface Player {
   _id: string;
   name: string;
-  value: string;
+  overall: string;
+  position: string;
+  pace: string;
+  shooting: string;
+  passing: string;
+  dribbling: string;
+  defense: string;
+  physicality: string;
   playerOwner?: string;
 }

@@ -94,7 +94,19 @@ const updateUser = async (req, res) => {
 
 const updateUserList = async (req, res) => {
   console.log("req.body :>> ", req.body);
-  const { userId, playerId, name, value } = req.body;
+  const {
+    userId,
+    playerId,
+    name,
+    overall,
+    position,
+    pace,
+    shooting,
+    passing,
+    dribbling,
+    defense,
+    physicality,
+  } = req.body;
   //! when we make this route authorize (sending the token in the request), we wont need to receive the ID in the request,
   //! because we will receive the user information thanks to the Token and Passport
 
@@ -107,7 +119,14 @@ const updateUserList = async (req, res) => {
           favPlayer: {
             _id: playerId,
             name: name,
-            value: value,
+            overall: overall,
+            position: position,
+            pace: pace,
+            shooting: shooting,
+            passing: passing,
+            dribbling: dribbling,
+            defense: defense,
+            physicality: physicality,
           },
         },
       },

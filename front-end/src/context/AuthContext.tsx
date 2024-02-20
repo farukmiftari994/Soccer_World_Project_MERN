@@ -1,5 +1,6 @@
 import { PropsWithChildren, createContext, useState } from "react";
 import baseUrl from "../../utils/baseurl";
+import { ResNotOk } from "../@types";
 
 interface AuthContextType {
   user: User | null;
@@ -17,14 +18,28 @@ interface AuthContextType {
   // asyncronised function always return a promise
   createPlayer: (values: {
     name: string;
-    value: string;
+    overall: string;
+    position: string;
+    pace: string;
+    shooting: string;
+    passing: string;
+    dribbling: string;
+    defense: string;
+    physicality: string;
     playerOwner?: string;
   }) => Promise<void>;
   updateUserWithPlayer: (
     playerId: string,
     userId: string,
-    playerName: string,
-    playerValue: string
+    name: string,
+    overall: string,
+    position: string,
+    pace: string,
+    shooting: string,
+    passing: string,
+    dribbling: string,
+    defense: string,
+    physicality: string
   ) => Promise<void>;
 
   loading: boolean;
@@ -181,7 +196,14 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const createPlayer = async (values: {
     name: string;
-    value: string;
+    overall: string;
+    position: string;
+    pace: string;
+    shooting: string;
+    passing: string;
+    dribbling: string;
+    defense: string;
+    physicality: string;
     playerOwner?: string;
   }) => {
     const headers = new Headers();
@@ -214,8 +236,15 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const updateUserWithPlayer = async (
     playerId: string,
     userId: string,
-    playerName: string,
-    playerValue: string
+    name: string,
+    overall: string,
+    position: string,
+    pace: string,
+    shooting: string,
+    passing: string,
+    dribbling: string,
+    defense: string,
+    physicality: string
   ) => {
     // if (!user && !player) return;
 
@@ -224,8 +253,15 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     const body = new URLSearchParams();
     body.append("playerId", playerId);
     body.append("userId", userId);
-    body.append("name", playerName);
-    body.append("value", playerValue);
+    body.append("name", name);
+    body.append("overall", overall);
+    body.append("position", position);
+    body.append("pace", pace);
+    body.append("shooting", shooting);
+    body.append("passing", passing);
+    body.append("dribbling", dribbling);
+    body.append("defense", defense);
+    body.append("physicality", physicality);
 
     var options = {
       method: "PATCH",

@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import baseUrl from "../../utils/baseurl";
 import { Button, Row } from "react-bootstrap";
-import myImage from "../img/arsenal.jpg";
+// import myImage from "../img/arsenal.jpg";
 import { AuthContext } from "../context/AuthContext";
+import Cards from "../components/Cards";
 
 // type APIResponseAllPlayers = {
 //   allPlayers: Player[];
@@ -12,12 +13,19 @@ import { AuthContext } from "../context/AuthContext";
 interface Player {
   _id: string;
   name: string;
-  value: string; // Assuming this is the property you want to display
+  overall: string;
+  position: string;
+  pace: string;
+  shooting: string;
+  passing: string;
+  dribbling: string;
+  defense: string;
+  physicality: string;
   playerOwner: {
     _id: string;
     email: string;
-    username?: string;
-    favPlayer?: string;
+    username?: string | undefined;
+    favPlayer?: string | undefined;
   }[];
 }
 
@@ -65,7 +73,14 @@ function CreatePlayer() {
         playerId,
         user?._id!,
         selectedPlayer.name,
-        selectedPlayer.value
+        selectedPlayer.overall,
+        selectedPlayer.position,
+        selectedPlayer.pace,
+        selectedPlayer.shooting,
+        selectedPlayer.passing,
+        selectedPlayer.dribbling,
+        selectedPlayer.defense,
+        selectedPlayer.physicality
       );
     }
   };
@@ -106,23 +121,7 @@ function CreatePlayer() {
               </Form.Select>
               {selectedPlayer && (
                 <div className="d-flex row justify-content-center pt-5">
-                  <img
-                    src={myImage}
-                    alt=""
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      paddingBottom: "20px",
-                    }}
-                  />
-                  <h3 className="d-flex justify-content-center">
-                    {selectedPlayer.name}
-                  </h3>
-                  <p className="d-flex justify-content-center">
-                    <b className="pe-2">Value:</b>
-                    {selectedPlayer.value}
-                  </p>
-
+                  <Cards player={selectedPlayer} />
                   <Button onClick={handleChange}>Create a Card</Button>
                 </div>
               )}

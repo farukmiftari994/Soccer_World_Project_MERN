@@ -5,6 +5,7 @@ import userRouter from "./routes/userRoutes.js";
 import "dotenv/config";
 import mongoose from "mongoose";
 import playersRouter from "./routes/playersRoutes.js";
+import cloudinaryConfig from "./config/cloudinary.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ const addMiddlewares = () => {
     })
   );
   app.use(cors());
+  cloudinaryConfig();
 };
 
 const addRoutes = () => {

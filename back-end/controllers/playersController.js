@@ -1,5 +1,6 @@
 import { isValidObjectId } from "mongoose";
 import PlayersModel from "../models/playersModel.js";
+import { v2 as cloudinary } from "cloudinary";
 
 // const getAllPlayers = async (req, res) => {
 //   try {
@@ -42,7 +43,18 @@ const getAllPlayers = async (req, res) => {
 
 const createPlayer = async (req, res) => {
   console.log(req.body);
-  const { name, value, playerOwner } = req.body;
+  const {
+    name,
+    overall,
+    position,
+    pace,
+    shooting,
+    passing,
+    dribbling,
+    defense,
+    physicality,
+    playerOwner,
+  } = req.body;
 
   try {
     const existingCard = await PlayersModel.findOne({
@@ -51,7 +63,18 @@ const createPlayer = async (req, res) => {
     if (existingCard) {
       return res.status(400).json({ error: "Card already exists" });
     }
-    const newPlayer = await PlayersModel.create({ name, value, playerOwner });
+    const newPlayer = await PlayersModel.create({
+      name,
+      overall,
+      position,
+      pace,
+      shooting,
+      passing,
+      dribbling,
+      defense,
+      physicality,
+      playerOwner,
+    });
     console.log("newPlayer :>> ", newPlayer);
     res.status(201).json(newPlayer);
   } catch (error) {
@@ -78,4 +101,35 @@ const updatePlayer = async (req, res) => {
   }
 };
 
-export { getAllPlayers, updatePlayer, createPlayer };
+const pictureUpload = async (req, res) => {
+  // console.log("req.file :>> ", req.file);
+
+  if (!req.file) {
+    res.status(500).json({ message: "File not Supported" });
+  }
+
+  if (req.file) {
+    try {
+      const pictureUploaded = await cloudinary.uploader.upload(req.file.path, {
+        folder: "playersProfile",
+      });
+      console.log("pictureUploaded :>> ", pictureUploaded);
+      res.status(201).json({
+        message: "File Uploaded Succesfully",
+        error: false,
+        data: {
+          image: pictureUploaded.secure_url,
+        },
+      });
+    } catch (error) {
+      console.log("error :>> ", error);
+      res.status(500).json({
+        message: "Something Went Wrong",
+        error: true,
+        data: null,
+      });
+    }
+  }
+};
+
+export { getAllPlayers, updatePlayer, createPlayer, pictureUpload };

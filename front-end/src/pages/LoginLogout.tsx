@@ -19,7 +19,13 @@ function LoginLogout() {
             <AuthForm submitTitle="Login" submit={login} />
           </Tab>
           <Tab eventKey="home" title="SIGN UP">
-            <AuthForm submitTitle="Sign Up" submit={signup} />
+            <AuthForm
+              submitTitle="Sign Up"
+              submit={signup}
+              isInput={true}
+              Tag="input"
+              ButtonTag="button"
+            />
           </Tab>
         </Tabs>
       </div>
