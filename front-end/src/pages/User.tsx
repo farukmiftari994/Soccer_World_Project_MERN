@@ -43,13 +43,21 @@ function User() {
               >
                 <Row>
                   <Form.Group as={Col}>
-                    <Form.Label className="pe-4">Current Email</Form.Label>
-                    <Form.Label style={{ color: "blue" }}>
-                      {user.email}
+                    <Form.Label className="pe-4 text-light">
+                      <b>Current Email</b>
+                    </Form.Label>
+                    <Form.Label
+                      style={{
+                        color: "rgba(151, 1085, 1035, 9.814)",
+                      }}
+                    >
+                      <b>{user.email}</b>
                     </Form.Label>
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label className="pe-4">Current Username</Form.Label>
+                    <Form.Label className=" text-light">
+                      <b>Current Username</b>
+                    </Form.Label>
                     <Form.Label style={{ color: "blue" }}>
                       {user.username}
                     </Form.Label>
@@ -58,7 +66,9 @@ function User() {
 
                 <Row className="mb-3">
                   <Form.Group as={Col}>
-                    <Form.Label>Change Email</Form.Label>
+                    <Form.Label className="text-light">
+                      <b>Change Email</b>
+                    </Form.Label>
                     <Form.Control
                       value={email}
                       type="email"
@@ -67,12 +77,16 @@ function User() {
                   </Form.Group>
 
                   <Form.Group as={Col}>
-                    <Form.Label>Change Password</Form.Label>
+                    <Form.Label className=" text-light">
+                      <b>Change Password</b>
+                    </Form.Label>
                     <Form.Control type="password" placeholder="***********" />
                   </Form.Group>
 
-                  <Form.Group>
-                    <Form.Label>Change Username</Form.Label>
+                  <Form.Group className="mt-2">
+                    <Form.Label className="text-light">
+                      <b>Change Username</b>
+                    </Form.Label>
 
                     <Form.Control
                       value={username}

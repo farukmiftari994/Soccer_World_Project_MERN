@@ -17,7 +17,7 @@ const fileFilter = (req, file, cb) => {
   let extension = path.extname(file.originalname);
   console.log("extension :>> ", extension);
 
-  if (extension !== (".jpg" && ".jpeg" && ".png")) {
+  if (extension !== ".jpg" && extension !== ".jpeg" && extension !== ".png") {
     console.log("No File");
     cb(null, false);
   } else {

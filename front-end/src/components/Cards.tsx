@@ -1,5 +1,3 @@
-import myImage from "../img/cristiano-ronaldo-png-45086.png";
-
 interface CardsProps {
   player: Player | undefined;
 }
@@ -9,11 +7,19 @@ const Cards: React.FC<CardsProps> = ({ player }) => {
     return <div>No player selected</div>;
   }
   return (
-    <div className="content-container">
+    <div
+      style={{
+        paddingTop: "60px",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <div className="cardContainer">
         <p className="ovr">{player.overall}</p>
-        <p className="position">{player.position}</p>
-        <img src={myImage} />
+        <div className="divPosition">
+          <p className="position">{player.position}</p>
+        </div>
+        <img src={player.image} />
 
         <h5>{player.name}</h5>
         <div className="ratings">

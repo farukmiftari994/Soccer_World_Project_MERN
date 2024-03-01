@@ -1,6 +1,7 @@
 import { isValidObjectId } from "mongoose";
 import PlayersModel from "../models/playersModel.js";
 import { v2 as cloudinary } from "cloudinary";
+import { encryptPassword } from "../utils/encryptPassword.js";
 
 // const getAllPlayers = async (req, res) => {
 //   try {
@@ -54,6 +55,7 @@ const createPlayer = async (req, res) => {
     defense,
     physicality,
     playerOwner,
+    image,
   } = req.body;
 
   try {
@@ -63,6 +65,7 @@ const createPlayer = async (req, res) => {
     if (existingCard) {
       return res.status(400).json({ error: "Card already exists" });
     }
+
     const newPlayer = await PlayersModel.create({
       name,
       overall,
@@ -74,6 +77,7 @@ const createPlayer = async (req, res) => {
       defense,
       physicality,
       playerOwner,
+      image,
     });
     console.log("newPlayer :>> ", newPlayer);
     res.status(201).json(newPlayer);
@@ -89,7 +93,7 @@ const updatePlayer = async (req, res) => {
   console.log(valid);
   if (!valid) return res.status(400).json({ error: "ID MISSING" });
   try {
-    const updatedPlayer = await PlayersModel.findBSyIdAndUpdate(id, req.body, {
+    const updatedPlayer = await PlayersModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     if (!updatedPlayer)

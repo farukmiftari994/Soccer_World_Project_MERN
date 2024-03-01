@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import baseUrl from "../../utils/baseurl";
+import Cards from "../components/Cards";
 
 type User = {
   _id: string;
@@ -17,6 +18,7 @@ type User = {
     defense: string;
     physicality: string;
     playerOwner: string;
+    image: string;
   }[];
 };
 
@@ -44,25 +46,25 @@ const AllPlayers = () => {
   console.log("data heretttt:>> ", card);
 
   return (
-    <div className="content-container">
-      <div className="content-container">
-        {card.map((user) => (
+    <div>
+      {card.map((user) => (
+        <div className="content-container">
           <div key={user._id}>
-            <p>{user.email}</p>
-            <ul>
+            <p className="allPlayersP">Cards created from: {user.email}</p>
+            <div className="allPlayersCards">
               {user.favPlayer ? (
                 user.favPlayer.map((player) => (
-                  <li key={player._id}>
-                    {player.name}: {player.shooting}
-                  </li>
+                  <a key={player._id}>
+                    <Cards player={player} />
+                  </a>
                 ))
               ) : (
                 <li>No players found</li>
               )}
-            </ul>
+            </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };

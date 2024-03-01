@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
         dribbling: { type: mongoose.Schema.Types.String, ref: "players" },
         defense: { type: mongoose.Schema.Types.String, ref: "players" },
         physicality: { type: mongoose.Schema.Types.String, ref: "players" },
+        image: { type: mongoose.Schema.Types.String, ref: "players" },
       },
     ],
   },

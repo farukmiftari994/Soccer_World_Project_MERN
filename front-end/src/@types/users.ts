@@ -18,4 +18,5 @@ interface Player {
   defense: string;
   physicality: string;
   playerOwner?: string;
+  image: string;
 }

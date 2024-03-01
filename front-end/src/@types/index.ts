@@ -9,3 +9,8 @@ export declare type UploadFileResponse = {
     image: string;
   };
 };
+
+export declare type SignupResponse = {
+  message: string;
+  user: User;
+};

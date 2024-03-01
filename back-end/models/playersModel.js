@@ -11,6 +11,7 @@ const playersSchema = new mongoose.Schema({
   defense: String,
   physicality: String,
   playerOwner: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+  image: String,
 });
 
 const PlayersModel = mongoose.model("players", playersSchema);

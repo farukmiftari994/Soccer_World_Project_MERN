@@ -9,14 +9,20 @@ function LoginLogout() {
   if (user) return <Navigate to={"/create"} />;
   return (
     <div className="content-container">
-      <div className="tab-container">
+      <div className="theForm">
         <Tabs
           defaultActiveKey="profile"
           id="fill-tab-example"
           className="mb-3 d-flex justify-content-center"
         >
           <Tab eventKey="profile" title="SIGN IN">
-            <AuthForm submitTitle="Login" submit={login} />
+            <AuthForm
+              submitTitle="Login"
+              submit={login}
+              isInput={false}
+              Tag={""}
+              ButtonTag={""}
+            />
           </Tab>
           <Tab eventKey="home" title="SIGN UP">
             <AuthForm

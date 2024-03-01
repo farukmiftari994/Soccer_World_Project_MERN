@@ -21,6 +21,7 @@ interface Player {
   dribbling: string;
   defense: string;
   physicality: string;
+  image: string;
   playerOwner: {
     _id: string;
     email: string;
@@ -80,7 +81,8 @@ function CreatePlayer() {
         selectedPlayer.passing,
         selectedPlayer.dribbling,
         selectedPlayer.defense,
-        selectedPlayer.physicality
+        selectedPlayer.physicality,
+        selectedPlayer.image
       );
     }
   };
@@ -100,7 +102,7 @@ function CreatePlayer() {
           style={{ width: "400px" }}
           className="d-flex justify-content-center"
         >
-          <Row className="d-flex justify-content-center">
+          <Row className="d-flex justify-content-center ">
             <h3 className="d-flex justify-content-center">
               Create a Player Card
             </h3>
@@ -113,15 +115,17 @@ function CreatePlayer() {
                 {allPlayers &&
                   allPlayers.map((player) => {
                     return (
-                      <option value={player._id} key={player._id}>
-                        {player.name}
-                      </option>
+                      <>
+                        <option value={player._id} key={player._id}>
+                          {player.name}
+                        </option>
+                      </>
                     );
                   })}
               </Form.Select>
               {selectedPlayer && (
                 <div className="d-flex row justify-content-center pt-5">
-                  <Cards player={selectedPlayer} />
+                  <Cards player={selectedPlayer} />;
                   <Button onClick={handleChange}>Create a Card</Button>
                 </div>
               )}

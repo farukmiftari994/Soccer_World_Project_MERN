@@ -25,6 +25,7 @@ function App() {
                 <Route path="/user" element={<User />} />
               </Route>
               <Route path="/user/players" element={<UserPlayers />} />
+
               <Route path="/create" element={<CreatePlayer />} />
               <Route path="/login" element={<LoginLogout />} />
               <Route path="/about" element={<About />} />

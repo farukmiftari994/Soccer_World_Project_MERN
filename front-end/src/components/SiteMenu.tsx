@@ -26,8 +26,8 @@ function SiteMenu({ children }: { children: React.ReactNode }): JSX.Element {
     },
   ];
   return (
-    <div className="containers">
-      <div className="siteMenu">
+    <div>
+      <div className="siteMenu ">
         {menuItem.map((item, index) => (
           <NavLink to={item.path} key={index} className="link">
             <div className="link_text">{item.name}</div>
