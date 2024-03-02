@@ -48,20 +48,18 @@ const AllPlayers = () => {
   return (
     <div>
       {card.map((user) => (
-        <div className="content-container">
-          <div key={user._id}>
-            <p className="allPlayersP">Cards created from: {user.email}</p>
-            <div className="allPlayersCards">
-              {user.favPlayer ? (
-                user.favPlayer.map((player) => (
-                  <a key={player._id}>
-                    <Cards player={player} />
-                  </a>
-                ))
-              ) : (
-                <li>No players found</li>
-              )}
-            </div>
+        <div key={user._id}>
+          <p className="allPlayersP">Cards created from: {user.email}</p>
+          <div className="allPlayersCards">
+            {user.favPlayer ? (
+              user.favPlayer.map((player) => (
+                <a key={player._id}>
+                  <Cards player={player} />
+                </a>
+              ))
+            ) : (
+              <li>No players found</li>
+            )}
           </div>
         </div>
       ))}

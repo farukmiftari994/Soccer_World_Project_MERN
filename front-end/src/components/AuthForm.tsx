@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Button, Form } from "react-bootstrap";
+import { Button, Col, Form } from "react-bootstrap";
 
 type Props = {
   submitTitle: string;
@@ -37,23 +37,30 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
           margin: "-30px",
         }}
       >
-        <Form.Control
-          type="email"
-          placeholder="Email"
-          value={inputValues.email}
-          onChange={handleChange}
-          style={{ width: "600px", fontSize: "14px" }}
-        />
-        <Form.Control
-          type="password"
-          placeholder="Password"
-          value={inputValues.password}
-          onChange={handleChange}
-          style={{ width: "400px", fontSize: "14px" }}
-        />
+        <Col md>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            value={inputValues.email}
+            onChange={handleChange}
+          />
+        </Col>
+        <Col md>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={inputValues.password}
+            onChange={handleChange}
+          />
+        </Col>
+
         <Button
           type="submit"
-          style={{ marginTop: "10px", width: "300px", fontSize: "14px" }}
+          style={{
+            marginTop: "10px",
+            border: "2px solid black",
+            width: "100%",
+          }}
         >
           {loading ? "Loading..." : submitTitle}
         </Button>

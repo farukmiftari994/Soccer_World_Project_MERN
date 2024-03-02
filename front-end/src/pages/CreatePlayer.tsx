@@ -22,12 +22,6 @@ interface Player {
   defense: string;
   physicality: string;
   image: string;
-  playerOwner: {
-    _id: string;
-    email: string;
-    username?: string | undefined;
-    favPlayer?: string | undefined;
-  }[];
 }
 
 function CreatePlayer() {
@@ -97,13 +91,21 @@ function CreatePlayer() {
 
   if (user)
     return (
-      <div className="content-container">
+      <div
+        className="d-flex justify-content-center"
+        style={{ paddingTop: "70px", color: "white" }}
+      >
         <div
           style={{ width: "400px" }}
           className="d-flex justify-content-center"
         >
           <Row className="d-flex justify-content-center ">
-            <h3 className="d-flex justify-content-center">
+            <h3
+              className="d-flex justify-content-center"
+              style={{
+                backgroundColor: "rgba(52, 116, 327, 0.549)",
+              }}
+            >
               Create a Player Card
             </h3>
             <Form.Group className="pb-4 pt-5">
@@ -124,9 +126,9 @@ function CreatePlayer() {
                   })}
               </Form.Select>
               {selectedPlayer && (
-                <div className="d-flex row justify-content-center pt-5">
-                  <Cards player={selectedPlayer} />;
-                  <Button onClick={handleChange}>Create a Card</Button>
+                <div className="d-flex row justify-content-center">
+                  <Cards player={selectedPlayer} />
+                  <Button onClick={handleChange}>Create a Player Card</Button>
                 </div>
               )}
             </Form.Group>

@@ -9,7 +9,7 @@ const Cards: React.FC<CardsProps> = ({ player }) => {
   return (
     <div
       style={{
-        paddingTop: "60px",
+        // paddingTop: "20px",
         display: "flex",
         justifyContent: "center",
       }}

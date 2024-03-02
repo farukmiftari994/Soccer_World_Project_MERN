@@ -1,6 +1,6 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { UploadFileResponse } from "../@types";
 
 type PlayerCredentials = {
@@ -109,10 +109,16 @@ function Administrator() {
     <div className="content-container">
       <div className="theForm">
         <Form onSubmit={handleSubmitImage}>
-          <Form.Control type="file" onChange={handleFileChange} />
-          <Button className="imageButton" type="submit">
-            Upload Image
-          </Button>
+          <Row className="g-2">
+            <Col md>
+              <Form.Control type="file" onChange={handleFileChange} />
+            </Col>
+            <Col md>
+              <Button className="imageButton" type="submit">
+                Upload Image
+              </Button>
+            </Col>
+          </Row>
         </Form>
         <Form>
           <Form.Control
@@ -122,83 +128,100 @@ function Administrator() {
             placeholder="Name"
             onChange={handleInputCredentialsChange}
           />
-          <Form.Control
-            className="input"
-            name="overall"
-            type="text"
-            placeholder="Overall"
-            onChange={handleInputCredentialsChange}
-          />
 
-          <Form.Select
-            style={{
-              width: "49%",
-              height: "9%",
-              border: "2px solid black",
-              marginTop: "19px",
-              marginLeft: "4px",
-            }}
-            name="position"
-            onChange={handleInputCredentialsChange}
-            aria-label="Default select example"
-          >
-            <option>Position</option>
-            <option value="ST">ST</option>
-            <option value="CF">CF</option>
-            <option value="SS">SS</option>
-            <option value="LW">LW</option>
-            <option value="RW">RW</option>
-            <option value="CM">CM</option>
-            <option value="CMD">CMD</option>
-            <option value="CAM">CAM</option>
-            <option value="AMF">AMF</option>
-            <option value="RM">RM</option>
-            <option value="DM">DM</option>
-            <option value="LM">LM</option>
-            <option value="CB">CB</option>
-          </Form.Select>
-          <Form.Control
-            className="input"
-            name="pace"
-            type="text"
-            placeholder="Pace"
-            onChange={handleInputCredentialsChange}
-          />
-          <Form.Control
-            className="input"
-            name="shooting"
-            type="text"
-            placeholder="Shooting"
-            onChange={handleInputCredentialsChange}
-          />
-          <Form.Control
-            className="input"
-            name="passing"
-            type="text"
-            placeholder="Passing"
-            onChange={handleInputCredentialsChange}
-          />
-          <Form.Control
-            className="input"
-            name="dribbling"
-            type="text"
-            placeholder="Dribbling"
-            onChange={handleInputCredentialsChange}
-          />
-          <Form.Control
-            className="input"
-            name="defense"
-            type="text"
-            placeholder="Defense"
-            onChange={handleInputCredentialsChange}
-          />
-          <Form.Control
-            className="input"
-            name="physicality"
-            type="text"
-            placeholder="Physicality"
-            onChange={handleInputCredentialsChange}
-          />
+          <Row>
+            <Col md>
+              <Form.Control
+                className="input"
+                name="overall"
+                type="text"
+                placeholder="Overall"
+                onChange={handleInputCredentialsChange}
+              />
+            </Col>
+            <Col md>
+              <Form.Select
+                name="position"
+                onChange={handleInputCredentialsChange}
+                aria-label="Default select example"
+              >
+                <option>Position</option>
+                <option value="ST">ST</option>
+                <option value="CF">CF</option>
+                <option value="SS">SS</option>
+                <option value="LW">LW</option>
+                <option value="RW">RW</option>
+                <option value="CM">CM</option>
+                <option value="CMD">CMD</option>
+                <option value="CAM">CAM</option>
+                <option value="AMF">AMF</option>
+                <option value="RM">RM</option>
+                <option value="DM">DM</option>
+                <option value="LM">LM</option>
+                <option value="CB">CB</option>
+              </Form.Select>
+            </Col>
+          </Row>
+          <Row>
+            <Col md>
+              <Form.Control
+                className="input"
+                name="pace"
+                type="text"
+                placeholder="Pace"
+                onChange={handleInputCredentialsChange}
+              />
+            </Col>
+            <Col md>
+              <Form.Control
+                className="input"
+                name="shooting"
+                type="text"
+                placeholder="Shooting"
+                onChange={handleInputCredentialsChange}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col md>
+              <Form.Control
+                className="input"
+                name="passing"
+                type="text"
+                placeholder="Passing"
+                onChange={handleInputCredentialsChange}
+              />
+            </Col>
+            <Col md>
+              <Form.Control
+                className="input"
+                name="dribbling"
+                type="text"
+                placeholder="Dribbling"
+                onChange={handleInputCredentialsChange}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col md>
+              <Form.Control
+                className="input"
+                name="defense"
+                type="text"
+                placeholder="Defense"
+                onChange={handleInputCredentialsChange}
+              />
+            </Col>
+            <Col md>
+              <Form.Control
+                className="input"
+                name="physicality"
+                type="text"
+                placeholder="Physicality"
+                onChange={handleInputCredentialsChange}
+              />
+            </Col>
+          </Row>
           <Button className="playerButton" onClick={handleSubmitAddPlayer}>
             Add a Player
           </Button>
