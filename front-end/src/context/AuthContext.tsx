@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import baseUrl from "../../utils/baseurl";
 import { ResNotOk, SignupResponse } from "../@types";
 
@@ -95,11 +95,22 @@ const defaultValue: AuthContextType = {
 
 export const AuthContext = createContext(defaultValue);
 
+type LoginDataType = {
+  user: User;
+  token: string;
+};
+
+type LoginResponse = {
+  message: string;
+  error: boolean;
+  data: LoginDataType;
+};
+
 export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [player, setPlayer] = useState<Player | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  console.log("oooo user :>> ", user);
+  // console.log("user :>> ", user);
 
   const allUsers = () => {
     const headers = new Headers();
@@ -155,11 +166,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       const response = await fetch(`${baseUrl}/api/users/signup`, options);
       if (response.ok) {
         const result = (await response.json()) as SignupResponse;
-        console.log("this is the one :>> ", result);
+        // console.log("this is the one :>> ", result);
         setUser(result.user);
       } else {
         const result = (await response.json()) as ResNotOk;
         console.log(result);
+        alert(result.error);
       }
     } catch (error) {
       console.log(error);
@@ -186,8 +198,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         requestOptions
       );
       if (response.ok) {
-        const result = (await response.json()) as User;
-        setUser(result);
+        const result = (await response.json()) as LoginResponse;
+        // setUser(result.data.user);
+        if (result.data.token) {
+          localStorage.setItem("token", result.data.token);
+          setUser(result.data.user);
+        }
       } else {
         const result = (await response.json()) as ResNotOk;
         console.log(result);
@@ -196,10 +212,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const logout = () => {
-    setUser(null);
   };
 
   const updateUser = async (values: {
@@ -230,6 +242,15 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const checkUserStatus = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log("User is logged in");
+    } else {
+      console.log("No user");
     }
   };
 
@@ -303,7 +324,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       );
       if (response.ok) {
         const result = (await response.json()) as Player;
-        console.log("the result :>> ", result);
+        // console.log("the result :>> ", result);
         setPlayer(result);
       } else {
         const result = (await response.json()) as ResNotOk;
@@ -359,7 +380,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       if (response.ok) {
         const result = await response.json();
         console.log("result:>> ", result);
-        // setPlayer(result);
       } else {
         const result = await response.json();
         console.log(result);
@@ -368,6 +388,17 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       console.log(error);
     }
   };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
+  useEffect(() => {
+    checkUserStatus();
+  }, [user?.email]);
+  //? to run the "checkUserStatus()" function or the useEffect not only when wh refresh the page but
+  //? also everytime the state of the user changes
 
   return (
     <AuthContext.Provider

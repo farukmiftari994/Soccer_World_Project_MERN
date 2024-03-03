@@ -34,6 +34,12 @@ function Administrator() {
       [e.target.name]: e.target.value,
     });
   };
+  const handleSelectCredentialsChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setPlayerCredentials({
+      ...(playerCredentials as PlayerCredentials),
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmitImage = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -142,7 +148,7 @@ function Administrator() {
             <Col md>
               <Form.Select
                 name="position"
-                onChange={handleInputCredentialsChange}
+                onChange={handleSelectCredentialsChange}
                 aria-label="Default select example"
               >
                 <option>Position</option>

@@ -24,6 +24,11 @@ type User = {
 
 const AllPlayers = () => {
   const [card, setCard] = useState<User[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -33,7 +38,7 @@ const AllPlayers = () => {
           throw new Error("Failed to fetch users");
         }
         const data = await response.json();
-        console.log("qetu esht data :>> ", data);
+        // console.log("qetu esht data :>> ", data);
 
         setCard(data); // Assuming data is an array of User objects
       } catch (error) {
@@ -43,12 +48,13 @@ const AllPlayers = () => {
     fetchAllUsers();
   }, []);
 
-  console.log("data heretttt:>> ", card);
-
   return (
     <div>
-      {card.map((user) => (
-        <div key={user._id}>
+      {card.map((user, index) => (
+        <div
+          key={user._id}
+          style={{ display: index + 1 !== currentPage && "none" }}
+        >
           <p className="allPlayersP">Cards created from: {user.email}</p>
           <div className="allPlayersCards">
             {user.favPlayer ? (
@@ -63,6 +69,26 @@ const AllPlayers = () => {
           </div>
         </div>
       ))}
+      <nav>
+        <ul className="pagination">
+          {Array.from({ length: card.length }).map((_, index) => (
+            <li
+              key={index}
+              className={`page-item ${
+                currentPage === index + 1 ? "active" : ""
+              }`}
+            >
+              <button
+                style={{ marginBottom: "0" }}
+                className="page-link"
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 };

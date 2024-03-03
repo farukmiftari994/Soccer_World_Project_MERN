@@ -10,12 +10,12 @@ function User() {
   const { user, updateUser } = useContext(AuthContext);
 
   const [email, setEmail] = useState(user ? user.email : "");
-  console.log("email okej:>> ", email);
+  // console.log("email okej:>> ", email);
 
   const [username, setUsername] = useState(user ? user.username : "");
-  console.log("username :>> ", username);
+  // console.log("username :>> ", username);
 
-  console.log("this is player", user);
+  // console.log("this is player", user);
   const handleSubmit = async () => {
     await updateUser({
       email,

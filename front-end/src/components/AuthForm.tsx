@@ -23,6 +23,12 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues({ ...inputValues, [e.target.type]: e.target.value });
+    //? ... (means rest operator)
+
+    // if (!inputValues.email || !inputValues.password) {
+    //   alert("Some fileds are missing");
+    //   return;
+    // }
   };
 
   return (

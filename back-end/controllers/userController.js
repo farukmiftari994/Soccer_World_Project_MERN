@@ -180,8 +180,10 @@ const login = async (req, res) => {
 
         if (token) {
           const user = {
-            // username: existingUser.username,
+            username: existingUser.username,
+            _id: existingUser._id,
             email: existingUser.email,
+            username: existingUser.username,
           };
 
           res.status(200).json({

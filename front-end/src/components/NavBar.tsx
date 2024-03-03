@@ -10,7 +10,7 @@ import { AuthContext } from "../context/AuthContext";
 function NavBar(): JSX.Element {
   const loginLogout = [{ path: "/login" }];
   const { user, logout } = useContext(AuthContext);
-  console.log("user :>> ", user);
+  // console.log("user :>> ", user);
   const location = useLocation();
 
   return (
@@ -24,9 +24,11 @@ function NavBar(): JSX.Element {
         ></Nav>
         <div>
           {loginLogout.map((item, index) => (
-            <NavLink to={item.path} key={index}>
+            <div key={index}>
               {!user ? (
-                <Button variant="outline-light">LOGIN</Button>
+                <NavLink to={item.path}>
+                  <Button variant="outline-light">LOGIN</Button>
+                </NavLink>
               ) : (
                 <Dropdown>
                   <DropdownButton
@@ -49,7 +51,7 @@ function NavBar(): JSX.Element {
                   </DropdownButton>
                 </Dropdown>
               )}
-            </NavLink>
+            </div>
           ))}
         </div>
       </Navbar>

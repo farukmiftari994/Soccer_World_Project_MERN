@@ -25,15 +25,15 @@ interface Player {
 }
 
 function CreatePlayer() {
-  const { user, player, updateUserWithPlayer } = useContext(AuthContext);
+  const { user, updateUserWithPlayer } = useContext(AuthContext);
   const [allPlayers, setAllPlayers] = useState<Player[]>([]);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | undefined>(
     undefined
   );
-  const [userId, setUserId] = useState(user?._id);
+  // const [userId, setUserId] = useState(user?._id);
   const [playerId, setPlayerId] = useState("");
 
-  console.log("hey", selectedPlayer);
+  // console.log("hey", selectedPlayer);
 
   useEffect(() => {
     const fetchAllPlayers = () => {
@@ -41,13 +41,13 @@ function CreatePlayer() {
         .then((res) => res.json())
         .then((res) => {
           const result = res;
-          console.log("result :>> ", result);
+          // console.log("result :>> ", result);
           // const foundPlayer = res as APIResponseAllPlayers;
           const foundPlayer = result.allPlayers as Player[];
-          console.log("result.allPlayers :>> ", result.allPlayers);
+          // console.log("result.allPlayers :>> ", result.allPlayers);
 
-          console.log("allPlayers.result :>> ", allPlayers);
-          console.log("found", foundPlayer);
+          // console.log("allPlayers.result :>> ", allPlayers);
+          // console.log("found", foundPlayer);
           // setAllPlayers(foundPlayer.allPlayers);
           setAllPlayers(foundPlayer);
         })
@@ -55,14 +55,14 @@ function CreatePlayer() {
     };
     fetchAllPlayers();
   }, []);
-  console.log("user :>> ", user);
-  console.log("player :>> ", player);
+  // console.log("user :>> ", user);
+  // console.log("player :>> ", player);
 
-  console.log("userId :>> ", userId);
-  console.log("playerId :>> ", playerId);
+  // console.log("userId :>> ", userId);
+  // console.log("playerId :>> ", playerId);
 
   const handleChange = async () => {
-    console.log("playerId, user?._id :>> ", playerId, user?._id);
+    // console.log("playerId, user?._id :>> ", playerId, user?._id);
     if (selectedPlayer) {
       await updateUserWithPlayer(
         playerId,
@@ -115,11 +115,11 @@ function CreatePlayer() {
               >
                 <option key="default">Select Player</option>
                 {allPlayers &&
-                  allPlayers.map((player) => {
+                  allPlayers.map((players) => {
                     return (
                       <>
-                        <option value={player._id} key={player._id}>
-                          {player.name}
+                        <option value={players._id} key={players._id}>
+                          {players.name}
                         </option>
                       </>
                     );
