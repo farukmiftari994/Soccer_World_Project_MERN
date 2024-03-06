@@ -18,6 +18,11 @@ const getUsers = async (req, res) => {
   }
 };
 
+const administrator = async (req, res) => {
+  console.log("req.user :>> ", req.user);
+  res.status(200).json({ message: "I am the one" });
+};
+
 const getUserByEmail = async (req, res) => {
   try {
     const foundUser = await UserModel.findOne({ email: req.params.email });
@@ -70,8 +75,10 @@ const signup = async (req, res) => {
             res.status(201).json({
               message: "User Registered",
               user: {
+                _id: newUser._id,
                 email: newUser.email,
                 username: newUser.username,
+                role: newUser.role,
                 favPlayer: newUser.favPlayer,
               },
             });
@@ -86,35 +93,10 @@ const signup = async (req, res) => {
   } catch (error) {
     console.log(error);
     if (error.code === 11000)
-      res.status(400).json({ error: "Email already registered" });
-    // res.status(500).json({ error: "Something went wrong" });
+      res.status(400).json({ error: "Email already registered!" });
+    res.status(500).json({ error: "Something went wrong! :(" });
   }
 };
-
-// const login = async (req, res) => {
-//   const { email, password } = req.body;
-//   if (!email || !password)
-//     return res.status(400).json({ error: "All fields must be included" });
-//   try {
-//     const foundUser = await UserModel.findOne({ email });
-//     if (!foundUser) {
-//       return req.status(500).json({ error: "Something went wrong" });
-//     }
-//     const match = await bcrypt.compare(password, foundUser.password);
-//     if (match) {
-//       const user = {
-//         _id: foundUser._id,
-//         email: foundUser.email,
-//         username: foundUser.username,
-//         createAt: foundUser.createdAt,
-//       };
-//       return res.status(200).json(user);
-//     } else res.status(400).json({ error: "Password incorrect" });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(404).json({ error: "No user exist with that email" });
-//   }
-// };
 
 const login = async (req, res) => {
   //! 1. Check that required fileds are coming in the req.body
@@ -180,10 +162,11 @@ const login = async (req, res) => {
 
         if (token) {
           const user = {
-            username: existingUser.username,
             _id: existingUser._id,
             email: existingUser.email,
             username: existingUser.username,
+            role: existingUser.role,
+            favPlayer: existingUser.favPlayer,
           };
 
           res.status(200).json({
@@ -214,6 +197,23 @@ const updateUser = async (req, res) => {
     });
     if (!updatedUser) return res.status(404).json({ error: "User not found" });
     res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const valid = isValidObjectId(id);
+  console.log(valid);
+  if (!valid) return res.status(400).json({ error: "ID MISSING" });
+  try {
+    const deleteUser = await UserModel.findByIdAndDelete(id, req.body, {
+      new: true,
+    });
+    if (!deleteUser) return res.status(404).json({ error: "User not found" });
+    res.status(200).json(deleteUser);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Something went wrong" });
@@ -270,21 +270,58 @@ const updateUserList = async (req, res) => {
       { new: true }
     ).populate({ path: "playerOwner" });
 
-    const updatePlayer = await PlayersModel.findByIdAndUpdate(
-      playerId,
-      req.body,
-      {
-        new: true,
-      }
-    );
+    // const updatePlayer = await PlayersModel.findByIdAndUpdate(
+    //   playerId,
+    //   req.body,
+    //   {
+    //     new: true,
+    //   }
+    // );
     res.status(201).json({
       updateUserWithPlayer,
       updatePlayerWithUser,
-      updatePlayer,
+      // updatePlayer,
     });
   } catch (error) {
     console.log("error :>> ", error);
   }
 };
 
-export { getUsers, getUserByEmail, signup, login, updateUser, updateUserList };
+const getProfile = async (req, res) => {
+  // console.log("req: ", req.user);
+  const { user } = req;
+  if (!user) {
+    res.status(500).json({
+      message: "you need to login first",
+      error: true,
+      data: null,
+    });
+  }
+  if (user) {
+    res.status(200).json({
+      message: "request successful",
+      error: false,
+      data: {
+        user: {
+          email: user.email,
+          _id: user._id,
+          username: user.username,
+          role: user.role,
+          favPlayer: user.favPlayer,
+        },
+      },
+    });
+  }
+};
+
+export {
+  getUsers,
+  administrator,
+  getUserByEmail,
+  signup,
+  login,
+  updateUser,
+  deleteUser,
+  updateUserList,
+  getProfile,
+};

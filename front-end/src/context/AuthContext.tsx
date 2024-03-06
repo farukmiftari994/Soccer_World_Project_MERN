@@ -1,11 +1,15 @@
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import baseUrl from "../../utils/baseurl";
-import { ResNotOk, SignupResponse } from "../@types";
+import { PlayerResponse, ResNotOk, SignupResponse } from "../@types";
+import { Player } from "../@types/users";
+import User from "../pages/User";
 
 interface AuthContextType {
   user: User | null;
-  player: Player | undefined;
+  // admin: User | null;
+  player: Player | null;
   allUsers: () => void;
+  getProfile: () => Promise<void>;
   allPlayers: () => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -15,19 +19,7 @@ interface AuthContextType {
     username: string | undefined;
     favPlayer?: string | undefined;
   }) => Promise<void>;
-  // updatePlayer: (values: {
-  //   name: string;
-  //   overall: string;
-  //   position: string;
-  //   pace: string;
-  //   shooting: string;
-  //   passing: string;
-  //   dribbling: string;
-  //   defense: string;
-  //   physicality: string;
-  //   playerOwner?: string;
-  //   image: string;
-  // }) => Promise<void>;
+  deleteUser: () => Promise<void>;
   // asyncronised function always return a promise
   createPlayer: (values: {
     name: string;
@@ -62,7 +54,8 @@ interface AuthContextType {
 
 const defaultValue: AuthContextType = {
   user: null,
-  player: undefined,
+  // admin: null,
+  player: null,
   allUsers: () => {
     throw new Error("no provider");
   },
@@ -72,6 +65,10 @@ const defaultValue: AuthContextType = {
   login: () => {
     throw new Error("no provider");
   },
+  getProfile: () => {
+    throw new Error("no provider");
+  },
+
   logout: () => {
     throw new Error("no provider");
   },
@@ -81,9 +78,9 @@ const defaultValue: AuthContextType = {
   updateUser: () => {
     throw new Error("no provider");
   },
-  // updatePlayer: () => {
-  //   throw new Error("no provider");
-  // },
+  deleteUser: () => {
+    throw new Error("no provider");
+  },
   createPlayer: () => {
     throw new Error("no provider");
   },
@@ -108,11 +105,13 @@ type LoginResponse = {
 
 export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
-  const [player, setPlayer] = useState<Player | undefined>(undefined);
+  console.log("user :>> ", user);
+  const [player, setPlayer] = useState<Player | null>(null);
+  console.log("player :>> ", player);
   const [loading, setLoading] = useState(false);
-  // console.log("user :>> ", user);
+  console.log("setLoading :>> ", setLoading);
 
-  const allUsers = () => {
+  const allUsers = async () => {
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -124,13 +123,23 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       headers,
       body,
     };
-
-    fetch("http://localhost:5000/api/users/all", requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
+    try {
+      const response = await fetch(`${baseUrl}/api/users/all`, requestOptions);
+      if (response.ok) {
+        const result = (await response.json()) as LoginResponse;
+        console.log("this is the one :>> ", result);
+        setUser(result.data.user);
+      } else {
+        const result = (await response.json()) as ResNotOk;
+        console.log(result);
+        alert(result.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const allPlayers = () => {
+
+  const allPlayers = async () => {
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -142,11 +151,23 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       headers,
       body,
     };
-
-    fetch("http://localhost:5000/api/players/all", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/players/all`,
+        requestOptions
+      );
+      if (response.ok) {
+        const result = (await response.json()) as PlayerResponse;
+        console.log("this is the one :>> ", result);
+        setPlayer(result.player);
+      } else {
+        const result = (await response.json()) as ResNotOk;
+        console.log(result);
+        alert(result.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const signup = async (email: string, password: string) => {
@@ -167,7 +188,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       if (response.ok) {
         const result = (await response.json()) as SignupResponse;
         // console.log("this is the one :>> ", result);
-        setUser(result.user);
+        setUser(result.user as User);
       } else {
         const result = (await response.json()) as ResNotOk;
         console.log(result);
@@ -223,11 +244,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     const body = JSON.stringify(values);
-    var requestOptions = {
+    const requestOptions = {
       method: "POST",
       headers,
       body,
     };
+
     try {
       const response = await fetch(
         `${baseUrl}/api/users/update/${user._id}`,
@@ -254,47 +276,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  // const updatePlayer = async (values: {
-  //   name: string;
-  //   overall: string;
-  //   position: string;
-  //   pace: string;
-  //   shooting: string;
-  //   passing: string;
-  //   dribbling: string;
-  //   defense: string;
-  //   physicality: string;
-  //   playerOwner?: string;
-  //   image: string;
-  // }) => {
-  //   if (!user) return;
-  //   const headers = new Headers();
-  //   headers.append("Content-Type", "application/x-www-form-urlencoded");
-
-  //   const body = JSON.stringify(values);
-
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers,
-  //     body,
-  //   };
-  //   try {
-  //     const response = await fetch(
-  //       `${baseUrl}/api/players/update/${player._id}`,
-  //       requestOptions
-  //     );
-  //     if (response.ok) {
-  //       const result = (await response.json()) as Player;
-  //       setPlayer(result);
-  //     } else {
-  //       const result = (await response.json()) as ResNotOk;
-  //       console.log(result);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const createPlayer = async (values: {
     name: string;
     overall: string;
@@ -319,7 +300,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     };
     try {
       const response = await fetch(
-        `${baseUrl}/api/players/createPlayer`,
+        `${baseUrl}/api/players/createPlayers`,
         options
       );
       if (response.ok) {
@@ -333,6 +314,21 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const deleteUser = async () => {
+    if (!user) return;
+    const body = new URLSearchParams();
+
+    const requestOptions = {
+      method: "POST",
+      body,
+    };
+
+    fetch(`http://localhost:5000/api/users/delete/${user?._id}`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
   };
 
   const updateUserWithPlayer = async (
@@ -394,6 +390,41 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     setUser(null);
   };
 
+  const getProfile = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("you have to login first");
+    }
+    if (token) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+      try {
+        const response = await fetch(
+          `${baseUrl}/api/users/profile`,
+          requestOptions
+        );
+        if (response.ok) {
+          const result = (await response.json()) as LoginResponse;
+
+          // APIResponse<User>;
+          console.log("result for getProfile", result);
+          setUser(result.data.user);
+        }
+      } catch (error) {
+        console.log("error ", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getProfile().catch((e) => console.log(e));
+  }, []);
+
   useEffect(() => {
     checkUserStatus();
   }, [user?.email]);
@@ -412,7 +443,8 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         logout,
         signup,
         updateUser,
-        // updatePlayer,
+        deleteUser,
+        getProfile,
         createPlayer,
         updateUserWithPlayer,
       }}

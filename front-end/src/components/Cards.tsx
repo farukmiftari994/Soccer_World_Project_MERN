@@ -1,3 +1,5 @@
+import { Player } from "../@types/users";
+
 interface CardsProps {
   player: Player | undefined;
 }

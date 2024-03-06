@@ -7,10 +7,11 @@ import LoginLogout from "./pages/LoginLogout.tsx";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
 import User from "./pages/User.tsx";
 import NavBar from "./components/NavBar.tsx";
-import CreatePlayer from "./pages/CreatePlayer.tsx";
-import UserPlayers from "./pages/UserPlayers.tsx";
+import CreateCard from "./pages/CreateCard.tsx";
+import UserPlayers from "./pages/UpdatePlayers.tsx";
 import Administrator from "./pages/Administrator.tsx";
 import AllPlayers from "./pages/AllPlayers.tsx";
+import UpdatePlayers from "./pages/UpdatePlayers.tsx";
 
 function App() {
   return (
@@ -26,12 +27,12 @@ function App() {
               </Route>
               <Route path="/user/players" element={<UserPlayers />} />
 
-              <Route path="/create" element={<CreatePlayer />} />
               <Route path="/login" element={<LoginLogout />} />
               <Route path="/about" element={<About />} />
               <Route path="/allPlayers" element={<AllPlayers />} />
-              <Route path="/createPlayer" element={<Administrator />} />
-              <Route path="/create" element={<CreatePlayer />} />
+              <Route path="/addPlayer" element={<Administrator />} />
+              <Route path="/updatePlayers" element={<UpdatePlayers />} />
+              <Route path="/createCard" element={<CreateCard />} />
             </Routes>
           </SiteMenu>
         </Router>

@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import baseUrl from "../../utils/baseurl";
 import Cards from "../components/Cards";
+import { AuthContext } from "../context/AuthContext";
 
 type User = {
   _id: string;
   email: string;
   username?: string;
+  role: string;
   favPlayer?: {
     _id: string;
     name: string;
@@ -23,6 +25,7 @@ type User = {
 };
 
 const AllPlayers = () => {
+  const { user } = useContext(AuthContext);
   const [card, setCard] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -48,49 +51,51 @@ const AllPlayers = () => {
     fetchAllUsers();
   }, []);
 
-  return (
-    <div>
-      {card.map((user, index) => (
-        <div
-          key={user._id}
-          style={{ display: index + 1 !== currentPage && "none" }}
-        >
-          <p className="allPlayersP">Cards created from: {user.email}</p>
-          <div className="allPlayersCards">
-            {user.favPlayer ? (
-              user.favPlayer.map((player) => (
-                <a key={player._id}>
-                  <Cards player={player} />
-                </a>
-              ))
-            ) : (
-              <li>No players found</li>
-            )}
+  if (user)
+    return (
+      <div>
+        {card.map((user, index) => (
+          <div
+            key={user._id}
+            style={{ display: index + 1 !== currentPage ? "none" : undefined }}
+          >
+            <p className="allPlayersP">Cards created from: {user.email}</p>
+
+            <div className="allPlayersCards">
+              {user.favPlayer ? (
+                user.favPlayer.map((player) => (
+                  <a key={player._id}>
+                    <Cards player={player} />
+                  </a>
+                ))
+              ) : (
+                <li>No players found</li>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
-      <nav>
-        <ul className="pagination">
-          {Array.from({ length: card.length }).map((_, index) => (
-            <li
-              key={index}
-              className={`page-item ${
-                currentPage === index + 1 ? "active" : ""
-              }`}
-            >
-              <button
-                style={{ marginBottom: "0" }}
-                className="page-link"
-                onClick={() => handlePageChange(index + 1)}
+        ))}
+        <nav>
+          <ul className="pagination">
+            {Array.from({ length: card.length }).map((_, index) => (
+              <li
+                key={index}
+                className={`page-item ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
               >
-                {index + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
-  );
+                <button
+                  style={{ marginBottom: "0" }}
+                  className="page-link"
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    );
 };
 
 export default AllPlayers;

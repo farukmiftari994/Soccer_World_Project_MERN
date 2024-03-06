@@ -1,7 +1,7 @@
 body {
   background-image: url("./img/new.jpg");
   background-size: cover;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   border: 4px solid rgba(255, 255, 255, 0.837);
   height: 132vh;
   position: relative;
@@ -122,7 +122,8 @@ svg {
 .tab-content {
   display: flex;
   justify-content: center;
-  margin: 86.4px;
+  /* margin: 86.4px; */
+  padding: 30px;
 }
 
 .cardContainer {
@@ -136,6 +137,14 @@ svg {
 }
 
 .cardContainer > h5 {
+  margin-top: 22px !important;
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.cardContainer > .name {
   margin-top: 22px !important;
   color: white;
   display: flex;
@@ -188,6 +197,69 @@ img {
   margin-left: 70px;
 }
 
+.cardContainer2 {
+  width: 120px;
+  height: 190px;
+  background-image: url("./img/card.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 20px 30px;
+  /* margin-bottom: 10px; */
+}
+
+.cardContainer2 > h5 {
+  margin-top: 10px !important;
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.ovr2 {
+  margin-top: 39px;
+  margin-left: 21px;
+  color: white;
+}
+
+.divPosition2 {
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  margin-left: -2px;
+  margin-top: -6px;
+  /* margin-bottom: 28px; */
+}
+
+.position2 {
+  margin-top: -16px;
+  color: white;
+}
+
+.ratings2 {
+  margin-top: -8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  color: white;
+  font-size: 10px;
+}
+
+.sho2,
+.pas2,
+.def2,
+.phy2 {
+  margin-top: -14px;
+}
+
+.img2 {
+  position: absolute;
+  width: 60px;
+  height: 90px;
+  margin-top: -85px;
+  margin-left: 50px;
+}
+
 /* form {
   display: flex;
   flex-direction: row;
@@ -198,6 +270,62 @@ input,
 select {
   margin: 5px 0 !important;
   border: 2px solid black !important;
+}
+
+.overall {
+  margin-top: 60px !important;
+  margin-left: 23px !important;
+  color: white;
+  border: none !important;
+  width: 35px !important;
+  height: 25px !important;
+  padding: 0 !important;
+  /* margin: 2px !important; */
+}
+.positionInput {
+  border: none !important;
+  margin-top: 13px !important;
+  width: 35px !important;
+  height: 25px !important;
+  padding: 0 !important;
+  /* margin: 2px !important; */
+}
+
+.cardInputs > input {
+  width: 30px !important;
+  height: 18px !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 2px !important;
+  /* margin-left: 24px !important; */
+  padding-left: 6px !important;
+}
+
+.playerNameInput {
+  display: flex;
+  justify-content: center;
+}
+.playerNameInput > input {
+  display: flex !important;
+  justify-content: center !important;
+  border: none !important;
+  margin-top: 18px !important;
+  width: 140px;
+  height: 25px;
+  padding: 0 !important;
+}
+
+.inputMarginleft {
+  margin-left: 7px !important;
+}
+.inputMarginRight1 {
+  margin-right: 9px !important;
+}
+.inputMarginRight2 {
+  margin-right: 8px !important;
+}
+.inputMarginRight3 {
+  margin-right: 7px !important;
 }
 
 .theForm {
@@ -268,8 +396,74 @@ select {
   color: #538af1 !important;
 }
 
-@media screen and (max-width: 2400px) {
+@media screen and (min-width: 2100px) {
   /* Adjust background image */
+
+  body {
+    height: 100vh;
+  }
+
+  .theForm {
+    border: 3px solid black;
+    border-radius: 30px;
+    width: 1000px;
+    height: 600px;
+    background-color: rgba(52, 116, 227, 0.549);
+    padding: 30px;
+  }
+
+  .cardContainer {
+    width: 230px;
+    height: 600px;
+    background-image: url("./img/card.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+
+  .cardContainer > h5 {
+    margin-top: 43px !important;
+    font-size: 22px;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ovr {
+    margin-top: 88px;
+    margin-left: 44px;
+    color: white;
+  }
+
+  .position {
+    margin-top: 0px;
+    margin-left: 26px;
+    color: white;
+  }
+
+  .ratings {
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    color: white;
+  }
+
+  .sho,
+  .pas,
+  .def,
+  .phy {
+    margin-top: -7px;
+  }
+
+  img {
+    position: absolute;
+    width: 130px;
+    height: 180px;
+    margin-top: -147px;
+    margin-left: 85px;
+  }
+
   input,
   select {
     margin: 20px 0 !important;

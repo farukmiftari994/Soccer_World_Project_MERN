@@ -22,19 +22,9 @@ const getAllPlayers = async (req, res) => {
     const allPlayers = await PlayersModel.find({});
     console.log("allPlayers :>> ", allPlayers);
 
-    // Remove _id for players who are owned by another user
-    const modifiedPlayers = allPlayers.map((player) => {
-      if (player.playerOwner !== req.userId) {
-        // If the player is owned by another user, remove the _id field
-        const { _id, ...rest } = player.toObject(); // Convert Mongoose document to plain JavaScript object
-        return rest;
-      }
-      return player.toObject(); // No modification needed, return the player as is
-    });
-
     res.status(200).json({
-      number: modifiedPlayers.length,
-      allPlayers: modifiedPlayers,
+      number: allPlayers.length,
+      allPlayers,
     });
   } catch (error) {
     console.log("error :>>", error);
@@ -87,7 +77,7 @@ const createPlayer = async (req, res) => {
   }
 };
 
-const updatePlayer = async (req, res) => {
+const updatePlayers = async (req, res) => {
   const { id } = req.params;
   const valid = isValidObjectId(id);
   console.log(valid);
@@ -136,4 +126,4 @@ const pictureUpload = async (req, res) => {
   }
 };
 
-export { getAllPlayers, updatePlayer, createPlayer, pictureUpload };
+export { getAllPlayers, updatePlayers, createPlayer, pictureUpload };

@@ -78,21 +78,23 @@ function Administrator() {
     headers.append("Content-Type", "application/x-www-form-urlencoded");
 
     const body = new URLSearchParams();
-    body.append("name", playerCredentials?.name);
-    body.append("overall", playerCredentials?.overall);
-    body.append("position", playerCredentials?.position);
-    body.append("pace", playerCredentials?.pace);
-    body.append("shooting", playerCredentials?.shooting);
-    body.append("passing", playerCredentials?.passing);
-    body.append("dribbling", playerCredentials?.dribbling);
-    body.append("defense", playerCredentials?.defense);
-    body.append("physicality", playerCredentials?.physicality);
-    body.append(
-      "image",
-      playerCredentials?.image
-        ? playerCredentials?.image
-        : "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
-    );
+    if (typeof playerCredentials === "object" && playerCredentials !== null) {
+      body.append("name", playerCredentials?.name);
+      body.append("overall", playerCredentials?.overall);
+      body.append("position", playerCredentials?.position);
+      body.append("pace", playerCredentials?.pace);
+      body.append("shooting", playerCredentials?.shooting);
+      body.append("passing", playerCredentials?.passing);
+      body.append("dribbling", playerCredentials?.dribbling);
+      body.append("defense", playerCredentials?.defense);
+      body.append("physicality", playerCredentials?.physicality);
+      body.append(
+        "image",
+        playerCredentials?.image
+          ? playerCredentials?.image
+          : "https://as1.ftcdn.net/v2/jpg/03/39/45/96/1000_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
+      );
+    }
 
     const requestOptions = {
       method: "POST",
@@ -113,7 +115,7 @@ function Administrator() {
 
   return (
     <div className="content-container">
-      <div className="theForm">
+      <div className="theForm" style={{ padding: "40px" }}>
         <Form onSubmit={handleSubmitImage}>
           <Row className="g-2">
             <Col md>

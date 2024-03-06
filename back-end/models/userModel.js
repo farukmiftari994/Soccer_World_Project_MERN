@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     username: String,
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
     favPlayer: [
       {
         _id: { type: mongoose.Schema.Types.ObjectId, ref: "players" },

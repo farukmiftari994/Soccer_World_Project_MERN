@@ -5,15 +5,36 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { AuthContext } from "../context/AuthContext";
 import { Tab, Tabs } from "react-bootstrap";
+import PlayerCards from "../components/PlayerCards";
+import { Player } from "../@types/users";
+import { Navigate } from "react-router-dom";
+
+type User = {
+  _id: string;
+  email: string;
+  username?: string;
+  role: string;
+  favPlayer?: {
+    _id: string;
+    name: string;
+    overall: string;
+    position: string;
+    pace: string;
+    shooting: string;
+    passing: string;
+    dribbling: string;
+    defense: string;
+    physicality: string;
+    playerOwner: string | null;
+    image: string;
+  }[];
+};
 
 function User() {
-  const { user, updateUser } = useContext(AuthContext);
-
+  const { user, updateUser, deleteUser, logout } = useContext(AuthContext);
   const [email, setEmail] = useState(user ? user.email : "");
-  // console.log("email okej:>> ", email);
-
   const [username, setUsername] = useState(user ? user.username : "");
-  // console.log("username :>> ", username);
+  const [redirect, setRedirect] = useState(false);
 
   // console.log("this is player", user);
   const handleSubmit = async () => {
@@ -23,10 +44,29 @@ function User() {
     });
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteUser();
+      // Set redirect to true after successful deletion
+      setRedirect(true);
+      logout();
+    } catch (error) {
+      console.error("Error deleting user account:", error);
+      // Optionally, handle errors
+    }
+  };
+  if (redirect) {
+    return <Navigate to={"/login"} />;
+  }
+  console.log("user.favPlayer :>> ", user);
+
   if (user)
     return (
       <div className="content-container">
-        <div className="tab-container">
+        <div
+          className="theForm"
+          style={{ width: "900px", height: "600px", marginTop: "50px" }}
+        >
           <Tabs
             defaultActiveKey="profile"
             id="fill-tab-example"
@@ -35,7 +75,7 @@ function User() {
             <Tab eventKey="profile" title="PROFILE">
               <Form
                 style={{
-                  paddingTop: "20px",
+                  paddingTop: "40px",
                   display: "flex",
                   flexDirection: "column",
                   gap: "1rem",
@@ -101,18 +141,36 @@ function User() {
                 <Button variant="primary" onClick={handleSubmit}>
                   Update
                 </Button>
+                <Button variant="primary" onClick={handleDelete}>
+                  Delete Account
+                </Button>
               </Form>
             </Tab>
-            <Tab eventKey="home" title="PLAYER">
+            <Tab eventKey="home" title="PLAYERS">
               <Form
                 style={{
-                  paddingTop: "20px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   gap: "1rem",
                 }}
-              ></Form>
+              >
+                <div className="allPlayersCards">
+                  {Array.isArray(user?.favPlayer) ? (
+                    user?.favPlayer.map((player: Player | undefined) =>
+                      player ? (
+                        <a key={player._id}>
+                          <div>
+                            <PlayerCards player={player} />
+                          </div>
+                        </a>
+                      ) : null
+                    )
+                  ) : (
+                    <li>No players found</li>
+                  )}
+                </div>
+              </Form>
             </Tab>
           </Tabs>
         </div>

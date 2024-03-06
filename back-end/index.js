@@ -6,6 +6,8 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import playersRouter from "./routes/playersRoutes.js";
 import cloudinaryConfig from "./config/cloudinary.js";
+import passport from "passport";
+import jwtStrategy from "./config/passportConfig.js";
 
 const app = express();
 
@@ -18,6 +20,8 @@ const addMiddlewares = () => {
   );
   app.use(cors());
   cloudinaryConfig();
+  app.use(passport.initialize());
+  passport.use(jwtStrategy);
 };
 
 const addRoutes = () => {

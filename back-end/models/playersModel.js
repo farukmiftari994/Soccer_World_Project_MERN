@@ -10,7 +10,11 @@ const playersSchema = new mongoose.Schema({
   dribbling: String,
   defense: String,
   physicality: String,
-  playerOwner: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+  playerOwner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    default: null,
+  },
   image: String,
 });
 

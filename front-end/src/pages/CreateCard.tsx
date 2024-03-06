@@ -5,34 +5,23 @@ import { Button, Row } from "react-bootstrap";
 // import myImage from "../img/arsenal.jpg";
 import { AuthContext } from "../context/AuthContext";
 import Cards from "../components/Cards";
+import { Player } from "../@types/users";
 
 // type APIResponseAllPlayers = {
 //   allPlayers: Player[];
 //   number: number;
 // };
-interface Player {
-  _id: string;
-  name: string;
-  overall: string;
-  position: string;
-  pace: string;
-  shooting: string;
-  passing: string;
-  dribbling: string;
-  defense: string;
-  physicality: string;
-  image: string;
-}
 
-function CreatePlayer() {
+function CreateCard() {
   const { user, updateUserWithPlayer } = useContext(AuthContext);
-  const [allPlayers, setAllPlayers] = useState<Player[]>([]);
+  const [ownedPlayers, setOwnedPlayers] = useState<Player[]>([]);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | undefined>(
     undefined
   );
   // const [userId, setUserId] = useState(user?._id);
   const [playerId, setPlayerId] = useState("");
 
+  console.log("user :>> ", user);
   // console.log("hey", selectedPlayer);
 
   useEffect(() => {
@@ -41,15 +30,16 @@ function CreatePlayer() {
         .then((res) => res.json())
         .then((res) => {
           const result = res;
-          // console.log("result :>> ", result);
-          // const foundPlayer = res as APIResponseAllPlayers;
-          const foundPlayer = result.allPlayers as Player[];
-          // console.log("result.allPlayers :>> ", result.allPlayers);
 
-          // console.log("allPlayers.result :>> ", allPlayers);
-          // console.log("found", foundPlayer);
-          // setAllPlayers(foundPlayer.allPlayers);
-          setAllPlayers(foundPlayer);
+          const foundPlayer = result.allPlayers as Player[];
+          const filterOwnedPlayers = foundPlayer.filter((player) => {
+            if (!player.playerOwner) {
+              return true;
+            } else return false;
+          });
+          console.log("foundPlayer", foundPlayer);
+
+          setOwnedPlayers(filterOwnedPlayers);
         })
         .catch((e) => console.log(e));
     };
@@ -84,7 +74,7 @@ function CreatePlayer() {
   const handlePlayerChange = (event: { target: { value: any } }) => {
     const selectedPlayerId = event.target.value;
     setPlayerId(selectedPlayerId);
-    const player = allPlayers.find((p) => p._id === selectedPlayerId);
+    const player = ownedPlayers.find((p) => p._id === selectedPlayerId);
 
     setSelectedPlayer(player);
   };
@@ -114,20 +104,18 @@ function CreatePlayer() {
                 onChange={handlePlayerChange}
               >
                 <option key="default">Select Player</option>
-                {allPlayers &&
-                  allPlayers.map((players) => {
+                {ownedPlayers &&
+                  ownedPlayers.map((players) => {
                     return (
-                      <>
-                        <option value={players._id} key={players._id}>
-                          {players.name}
-                        </option>
-                      </>
+                      <option value={players._id} key={players._id}>
+                        {players.name}
+                      </option>
                     );
                   })}
               </Form.Select>
               {selectedPlayer && (
                 <div className="d-flex row justify-content-center">
-                  <Cards player={selectedPlayer} />
+                  <Cards player={selectedPlayer} key={selectedPlayer._id} />
                   <Button onClick={handleChange}>Create a Player Card</Button>
                 </div>
               )}
@@ -138,4 +126,4 @@ function CreatePlayer() {
     );
 }
 
-export default CreatePlayer;
+export default CreateCard;
