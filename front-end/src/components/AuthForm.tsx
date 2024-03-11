@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
+// import { AuthContext } from "../context/AuthContext";
 import { Button, Col, Form } from "react-bootstrap";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const AuthForm = ({ submitTitle, submit }: Props) => {
-  const { loading } = useContext(AuthContext);
+  // const { loading } = useContext(AuthContext);
   const [inputValues, setInputValues] = useState({ email: "", password: "" });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,7 +68,8 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
             width: "100%",
           }}
         >
-          {loading ? "Loading..." : submitTitle}
+          {/* {loading ? "Loading..." : submitTitle} */}
+          {submitTitle}
         </Button>
       </Form>
     </>

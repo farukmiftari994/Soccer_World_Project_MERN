@@ -50,14 +50,26 @@ const AllPlayers = () => {
     };
     fetchAllUsers();
   }, []);
-
+  if (!user) {
+    return (
+      <div className="content-container">
+        <div className="theForm">
+          <h1 className="d-flex justify-content-center">
+            Please Login to continue
+          </h1>
+        </div>
+      </div>
+    );
+  }
   if (user)
     return (
       <div>
         {card.map((user, index) => (
           <div
             key={user._id}
-            style={{ display: index + 1 !== currentPage ? "none" : undefined }}
+            style={{
+              display: index + 1 !== currentPage ? "none" : undefined,
+            }}
           >
             <p className="allPlayersP">Cards created from: {user.email}</p>
 

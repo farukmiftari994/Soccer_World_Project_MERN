@@ -3,6 +3,7 @@ import baseUrl from "../../utils/baseurl";
 import { PlayerResponse, ResNotOk, SignupResponse } from "../@types";
 import { Player } from "../@types/users";
 import User from "../pages/User";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   user: User | null;
@@ -19,6 +20,7 @@ interface AuthContextType {
     username: string | undefined;
     favPlayer?: string | undefined;
   }) => Promise<void>;
+  deletePlayer: (playerId: string) => Promise<void>;
   deleteUser: () => Promise<void>;
   // asyncronised function always return a promise
   createPlayer: (values: {
@@ -49,7 +51,7 @@ interface AuthContextType {
     image: string
   ) => Promise<void>;
 
-  loading: boolean;
+  // loading: boolean;
 }
 
 const defaultValue: AuthContextType = {
@@ -78,6 +80,9 @@ const defaultValue: AuthContextType = {
   updateUser: () => {
     throw new Error("no provider");
   },
+  deletePlayer: () => {
+    throw new Error("no provider");
+  },
   deleteUser: () => {
     throw new Error("no provider");
   },
@@ -87,7 +92,7 @@ const defaultValue: AuthContextType = {
   updateUserWithPlayer: () => {
     throw new Error("no provider");
   },
-  loading: false,
+  // loading: false,
 };
 
 export const AuthContext = createContext(defaultValue);
@@ -108,8 +113,10 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   console.log("user :>> ", user);
   const [player, setPlayer] = useState<Player | null>(null);
   console.log("player :>> ", player);
-  const [loading, setLoading] = useState(false);
-  console.log("setLoading :>> ", setLoading);
+  // const [loading, setLoading] = useState(false);
+  // console.log("setLoading :>> ", setLoading);
+
+  const navigateTo = useNavigate();
 
   const allUsers = async () => {
     const headers = new Headers();
@@ -228,7 +235,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       } else {
         const result = (await response.json()) as ResNotOk;
         console.log(result);
-        if (!user) return alert("There's no User with that Email");
+        if (!user) return alert("Email or password is invalid");
       }
     } catch (error) {
       console.log(error);
@@ -264,15 +271,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       }
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const checkUserStatus = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      console.log("User is logged in");
-    } else {
-      console.log("No user");
     }
   };
 
@@ -316,16 +314,56 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const deletePlayer = async (playerId: string) => {
+    const token = localStorage.getItem("token");
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
+    headers.append("Authorization", `Bearer ${token}`);
+
+    const body = new URLSearchParams();
+    body.append("playerId", playerId);
+
+    const options = {
+      method: "POST",
+      headers,
+      body,
+    };
+
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/users/deletePlayer`,
+        options
+      );
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Deleted player successfully:", result);
+        // Handle any state updates or UI changes if needed
+      } else {
+        const result = await response.json();
+        console.error("Failed to delete player:", result.error);
+        // Handle error state or UI changes if needed
+      }
+    } catch (error) {
+      console.error("Error deleting player:", error);
+      // Handle error state or UI changes if needed
+    }
+  };
+
   const deleteUser = async () => {
     if (!user) return;
     const body = new URLSearchParams();
+    const myHeaders = new Headers();
+    const token = localStorage.getItem("token");
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const requestOptions = {
       method: "POST",
       body,
+      headers: myHeaders,
     };
 
-    fetch(`http://localhost:5000/api/users/delete/${user?._id}`, requestOptions)
+    fetch(`${baseUrl}/api/users/delete/${user?._id}`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.error(error));
@@ -375,10 +413,13 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       );
       if (response.ok) {
         const result = await response.json();
+        navigateTo("/allPlayers");
         console.log("result:>> ", result);
+        setUser(result.updateUserWithPlayer);
       } else {
         const result = await response.json();
         console.log(result);
+        // setUser(result);
       }
     } catch (error) {
       console.log(error);
@@ -392,9 +433,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const getProfile = async () => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      alert("you have to login first");
-    }
+    // if (!token) {
+    //   alert("you have to login first");
+    // }
     if (token) {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
@@ -414,35 +455,36 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
           // APIResponse<User>;
           console.log("result for getProfile", result);
           setUser(result.data.user);
+          // setLoading(false);
         }
       } catch (error) {
+        // setLoading(true);
         console.log("error ", error);
       }
     }
   };
 
   useEffect(() => {
-    getProfile().catch((e) => console.log(e));
+    getProfile();
+    // allUsers();
   }, []);
 
-  useEffect(() => {
-    checkUserStatus();
-  }, [user?.email]);
-  //? to run the "checkUserStatus()" function or the useEffect not only when wh refresh the page but
-  //? also everytime the state of the user changes
+  // //? to run the "checkUserStatus()" function or the useEffect not only when wh refresh the page but
+  // //? also everytime the state of the user changes
 
   return (
     <AuthContext.Provider
       value={{
         user,
         player,
-        loading,
+        // loading,
         allUsers,
         allPlayers,
         login,
         logout,
         signup,
         updateUser,
+        deletePlayer,
         deleteUser,
         getProfile,
         createPlayer,

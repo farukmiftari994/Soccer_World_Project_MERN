@@ -8,9 +8,6 @@ import { generateToken } from "../utils/tokenServices.js";
 const getUsers = async (req, res) => {
   try {
     const allUsers = await UserModel.find({}).select("-password");
-    // .populate({
-    //   path: "players",
-    // });
     res.status(200).json(allUsers);
   } catch (e) {
     console.log(e);
@@ -20,12 +17,14 @@ const getUsers = async (req, res) => {
 
 const administrator = async (req, res) => {
   console.log("req.user :>> ", req.user);
-  res.status(200).json({ message: "I am the one" });
+  res.status(200).json({ message: "Admin" });
 };
 
 const getUserByEmail = async (req, res) => {
   try {
-    const foundUser = await UserModel.findOne({ email: req.params.email });
+    const foundUser = await UserModel.findOne({
+      email: req.params.email,
+    });
     if (foundUser) {
       return res.status(200).json(foundUser);
     } else {
@@ -71,6 +70,7 @@ const signup = async (req, res) => {
           });
 
           console.log("newUser :>> ", newUser);
+          //if you want, generate token here with newUser._id
           if (newUser) {
             res.status(201).json({
               message: "User Registered",
@@ -212,8 +212,34 @@ const deleteUser = async (req, res) => {
     const deleteUser = await UserModel.findByIdAndDelete(id, req.body, {
       new: true,
     });
+    console.log("deleteUser :>> ", deleteUser);
+    const favPlayersIds = deleteUser.favPlayer.map(async (favPlayer) => {
+      await PlayersModel.findByIdAndUpdate(favPlayer._id, {
+        playerOwner: null,
+      });
+    });
+
     if (!deleteUser) return res.status(404).json({ error: "User not found" });
     res.status(200).json(deleteUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const deletePlayer = async (req, res) => {
+  const { playerId } = req.body;
+
+  try {
+    req.user.favPlayer = req.user.favPlayer.filter((player) => {
+      if (player._id.toString() === playerId.toString()) return false;
+      return true;
+    });
+    req.user.save();
+    const deletePlayer = await PlayersModel.findByIdAndUpdate(playerId, {
+      playerOwner: null,
+    });
+    res.status(200).json({ message: "Player deleted" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Something went wrong" });
@@ -262,25 +288,18 @@ const updateUserList = async (req, res) => {
       },
 
       { new: true }
-    ).populate({ path: "favPlayer" });
+    );
 
     const updatePlayerWithUser = await PlayersModel.findByIdAndUpdate(
       playerId,
       { playerOwner: userId },
       { new: true }
-    ).populate({ path: "playerOwner" });
+    );
+    // .populate({ path: "playerOwner" });
 
-    // const updatePlayer = await PlayersModel.findByIdAndUpdate(
-    //   playerId,
-    //   req.body,
-    //   {
-    //     new: true,
-    //   }
-    // );
     res.status(201).json({
       updateUserWithPlayer,
       updatePlayerWithUser,
-      // updatePlayer,
     });
   } catch (error) {
     console.log("error :>> ", error);
@@ -322,6 +341,7 @@ export {
   login,
   updateUser,
   deleteUser,
+  deletePlayer,
   updateUserList,
   getProfile,
 };

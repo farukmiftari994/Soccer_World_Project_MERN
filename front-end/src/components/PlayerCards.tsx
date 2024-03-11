@@ -1,10 +1,12 @@
+import { Button } from "react-bootstrap";
 import { Player } from "../@types/users";
 
 interface CardsProps {
   player: Player | undefined;
+  handleDeletePlayer: any;
 }
 
-const Cards: React.FC<CardsProps> = ({ player }) => {
+const Cards: React.FC<CardsProps> = ({ player, handleDeletePlayer }) => {
   if (!player) {
     return <div>No player selected</div>;
   }
@@ -17,12 +19,14 @@ const Cards: React.FC<CardsProps> = ({ player }) => {
       }}
     >
       <div className="cardContainer2">
+        <Button onClick={handleDeletePlayer} variant="danger">
+          DELETE
+        </Button>
         <p className="ovr2">{player.overall}</p>
         <div className="divPosition2">
           <p className="position2">{player.position}</p>
         </div>
         <img className="img2" src={player.image} />
-
         <h5>{player.name}</h5>
         <div className="ratings2">
           <div>

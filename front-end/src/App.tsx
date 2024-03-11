@@ -12,12 +12,13 @@ import UserPlayers from "./pages/UpdatePlayers.tsx";
 import Administrator from "./pages/Administrator.tsx";
 import AllPlayers from "./pages/AllPlayers.tsx";
 import UpdatePlayers from "./pages/UpdatePlayers.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 function App() {
   return (
     <>
-      <AuthContextProvider>
-        <Router>
+      <Router>
+        <AuthContextProvider>
           <NavBar />
           <SiteMenu>
             <Routes>
@@ -31,12 +32,19 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/allPlayers" element={<AllPlayers />} />
               <Route path="/addPlayer" element={<Administrator />} />
-              <Route path="/updatePlayers" element={<UpdatePlayers />} />
+              <Route
+                path="/updatePlayers"
+                element={
+                  <ProtectedRoute>
+                    <UpdatePlayers />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/createCard" element={<CreateCard />} />
             </Routes>
           </SiteMenu>
-        </Router>
-      </AuthContextProvider>
+        </AuthContextProvider>
+      </Router>
     </>
   );
 }

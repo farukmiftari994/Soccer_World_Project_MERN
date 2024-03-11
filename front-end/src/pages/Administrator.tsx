@@ -142,7 +142,7 @@ function Administrator() {
               <Form.Control
                 className="input"
                 name="overall"
-                type="text"
+                type="number"
                 placeholder="Overall"
                 onChange={handleInputCredentialsChange}
               />
@@ -175,7 +175,7 @@ function Administrator() {
               <Form.Control
                 className="input"
                 name="pace"
-                type="text"
+                type="number"
                 placeholder="Pace"
                 onChange={handleInputCredentialsChange}
               />
@@ -184,7 +184,7 @@ function Administrator() {
               <Form.Control
                 className="input"
                 name="shooting"
-                type="text"
+                type="number"
                 placeholder="Shooting"
                 onChange={handleInputCredentialsChange}
               />
@@ -195,7 +195,7 @@ function Administrator() {
               <Form.Control
                 className="input"
                 name="passing"
-                type="text"
+                type="number"
                 placeholder="Passing"
                 onChange={handleInputCredentialsChange}
               />
@@ -204,7 +204,7 @@ function Administrator() {
               <Form.Control
                 className="input"
                 name="dribbling"
-                type="text"
+                type="number"
                 placeholder="Dribbling"
                 onChange={handleInputCredentialsChange}
               />
@@ -215,7 +215,7 @@ function Administrator() {
               <Form.Control
                 className="input"
                 name="defense"
-                type="text"
+                type="number"
                 placeholder="Defense"
                 onChange={handleInputCredentialsChange}
               />
@@ -224,7 +224,7 @@ function Administrator() {
               <Form.Control
                 className="input"
                 name="physicality"
-                type="text"
+                type="number"
                 placeholder="Physicality"
                 onChange={handleInputCredentialsChange}
               />

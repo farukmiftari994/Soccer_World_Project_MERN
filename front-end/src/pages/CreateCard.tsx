@@ -51,7 +51,7 @@ function CreateCard() {
   // console.log("userId :>> ", userId);
   // console.log("playerId :>> ", playerId);
 
-  const handleChange = async () => {
+  const handleSubmit = async () => {
     // console.log("playerId, user?._id :>> ", playerId, user?._id);
     if (selectedPlayer) {
       await updateUserWithPlayer(
@@ -78,7 +78,17 @@ function CreateCard() {
 
     setSelectedPlayer(player);
   };
-
+  if (!user) {
+    return (
+      <div className="content-container">
+        <div className="theForm">
+          <h1 className="d-flex justify-content-center">
+            Please Login to continue
+          </h1>
+        </div>
+      </div>
+    );
+  }
   if (user)
     return (
       <div
@@ -116,7 +126,7 @@ function CreateCard() {
               {selectedPlayer && (
                 <div className="d-flex row justify-content-center">
                   <Cards player={selectedPlayer} key={selectedPlayer._id} />
-                  <Button onClick={handleChange}>Create a Player Card</Button>
+                  <Button onClick={handleSubmit}>Create a Player Card</Button>
                 </div>
               )}
             </Form.Group>

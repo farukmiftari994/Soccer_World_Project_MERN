@@ -9,7 +9,7 @@ const generateToken = (userId) => {
   //! SecretOrPRivateKey is our own password needed to generate and later validate the token
   //! hide that password as an .env variable!! .. and make it complicated
 
-  const signOrPrivateKey = "secretPassword";
+  const signOrPrivateKey = process.env.TOKEN_SECRET_KEY;
 
   //! inside signOptions we can include the "longer Or Private Claims" and other custom claims
   const signOptions = {

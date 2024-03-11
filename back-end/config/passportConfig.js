@@ -3,7 +3,7 @@ import { UserModel } from "../models/userModel.js";
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "secretPassword",
+  secretOrKey: process.env.TOKEN_SECRET_KEY,
 };
 
 const jwtStrategy = new JwtStrategy(options, async function (

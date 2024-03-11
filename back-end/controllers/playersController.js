@@ -3,19 +3,6 @@ import PlayersModel from "../models/playersModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import { encryptPassword } from "../utils/encryptPassword.js";
 
-// const getAllPlayers = async (req, res) => {
-//   try {
-//     const allPlayers = await PlayersModel.find();
-//     res.status(200).json({
-//       number: allPlayers.length,
-//       allPlayers,
-//     });
-//   } catch (error) {
-//     console.log("error :>>", error);
-//     res.status(500).json({ error: "Something went wrong" });
-//   }
-// };
-
 const getAllPlayers = async (req, res) => {
   try {
     // Fetch all players

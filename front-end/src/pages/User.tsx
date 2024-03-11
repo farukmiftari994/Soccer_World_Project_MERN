@@ -31,9 +31,11 @@ type User = {
 };
 
 function User() {
-  const { user, updateUser, deleteUser, logout } = useContext(AuthContext);
+  const { user, updateUser, deleteUser, deletePlayer, logout } =
+    useContext(AuthContext);
   const [email, setEmail] = useState(user ? user.email : "");
   const [username, setUsername] = useState(user ? user.username : "");
+
   const [redirect, setRedirect] = useState(false);
 
   // console.log("this is player", user);
@@ -52,9 +54,25 @@ function User() {
       logout();
     } catch (error) {
       console.error("Error deleting user account:", error);
-      // Optionally, handle errors
     }
   };
+
+  const handleDeletePlayer = async (playerId: string) => {
+    try {
+      const selectedPlayer = user?.favPlayer?.find(
+        (player) => player._id === playerId
+      );
+      console.log("selectedPlayer :>> ", selectedPlayer);
+      if (selectedPlayer) {
+        await deletePlayer(playerId); // Pass playerId directly to deletePlayer
+      } else {
+        console.error("Player not found in the favorite list.");
+      }
+    } catch (error) {
+      console.error("Error deleting player:", error);
+    }
+  };
+
   if (redirect) {
     return <Navigate to={"/login"} />;
   }
@@ -141,7 +159,14 @@ function User() {
                 <Button variant="primary" onClick={handleSubmit}>
                   Update
                 </Button>
-                <Button variant="primary" onClick={handleDelete}>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    window.confirm(
+                      "Are you sure you want to delete your account"
+                    ) && handleDelete();
+                  }}
+                >
                   Delete Account
                 </Button>
               </Form>
@@ -161,7 +186,10 @@ function User() {
                       player ? (
                         <a key={player._id}>
                           <div>
-                            <PlayerCards player={player} />
+                            <PlayerCards
+                              player={player}
+                              handleDeletePlayer={handleDeletePlayer}
+                            />
                           </div>
                         </a>
                       ) : null

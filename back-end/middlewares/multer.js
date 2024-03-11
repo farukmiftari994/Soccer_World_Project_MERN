@@ -18,7 +18,7 @@ const fileFilter = (req, file, cb) => {
   console.log("extension :>> ", extension);
 
   if (extension !== ".jpg" && extension !== ".jpeg" && extension !== ".png") {
-    console.log("No File");
+    console.log("File not accepted");
     cb(null, false);
   } else {
     console.log("File Accepted");
