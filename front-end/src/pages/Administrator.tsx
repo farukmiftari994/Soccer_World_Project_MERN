@@ -2,6 +2,7 @@ import { ChangeEvent, MouseEvent, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Button, Col, Row } from "react-bootstrap";
 import { UploadFileResponse } from "../@types";
+import baseUrl from "../../utils/baseurl";
 
 type PlayerCredentials = {
   name: string;
@@ -53,7 +54,7 @@ function Administrator() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/players/pictureUpload",
+        `${baseUrl}/api/players/pictureUpload`,
         requestOptions
       );
       if (!response.ok) {
@@ -103,7 +104,7 @@ function Administrator() {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/players/createPlayer",
+        `${baseUrl}/api/players/createPlayer`,
         requestOptions
       );
       const result = await response.json();
