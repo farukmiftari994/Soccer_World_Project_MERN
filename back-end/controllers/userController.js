@@ -341,6 +341,7 @@ const getProfile = async (req, res) => {
 };
 
 export {
+  test,
   getUsers,
   administrator,
   getUserByEmail,
