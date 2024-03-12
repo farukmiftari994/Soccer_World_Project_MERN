@@ -20,7 +20,7 @@ interface AuthContextType {
     username: string | undefined;
     favPlayer?: string | undefined;
   }) => Promise<void>;
-  deletePlayer: (playerId?: string | undefined) => Promise<void>;
+  deletePlayer: (playerId: string) => Promise<void>;
   deleteUser: () => Promise<void>;
   // asyncronised function always return a promise
   createPlayer: (values: {
@@ -337,6 +337,16 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       if (response.ok) {
         const result = await response.json();
         console.log("Deleted player successfully:", result);
+        //update user state
+        setUser((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            favPlayer: prev.favPlayer?.filter(
+              (player) => player._id !== playerId
+            ),
+          };
+        });
       } else {
         const result = await response.json();
         console.error("Failed to delete player:", result.error);

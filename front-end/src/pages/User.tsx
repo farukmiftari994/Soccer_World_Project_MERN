@@ -105,11 +105,15 @@ function User() {
                     </Form.Label>
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label className=" text-light">
+                    <Form.Label className="pe-4 text-light">
                       <b>Current Username</b>
                     </Form.Label>
-                    <Form.Label style={{ color: "blue" }}>
-                      {user.username}
+                    <Form.Label
+                      style={{
+                        color: "rgba(151, 1085, 1035, 9.814)",
+                      }}
+                    >
+                      <b>{user.username}</b>
                     </Form.Label>
                   </Form.Group>
                 </Row>

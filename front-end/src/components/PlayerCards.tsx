@@ -23,6 +23,7 @@ const Cards: React.FC<CardsProps> = ({ player, handleDeletePlayer }) => {
     >
       <div className="cardContainer2">
         <Button
+          className="button2"
           onClick={(e) => handleDeletePlayer(player._id, e)}
           variant="danger"
         >
