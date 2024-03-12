@@ -20,7 +20,7 @@ interface AuthContextType {
     username: string | undefined;
     favPlayer?: string | undefined;
   }) => Promise<void>;
-  deletePlayer: (playerId: string) => Promise<void>;
+  deletePlayer: (playerId?: string | undefined) => Promise<void>;
   deleteUser: () => Promise<void>;
   // asyncronised function always return a promise
   createPlayer: (values: {
@@ -323,7 +323,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
     const body = new URLSearchParams();
     body.append("playerId", playerId);
-
     const options = {
       method: "POST",
       headers,
@@ -338,15 +337,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       if (response.ok) {
         const result = await response.json();
         console.log("Deleted player successfully:", result);
-        // Handle any state updates or UI changes if needed
       } else {
         const result = await response.json();
         console.error("Failed to delete player:", result.error);
-        // Handle error state or UI changes if needed
       }
     } catch (error) {
       console.error("Error deleting player:", error);
-      // Handle error state or UI changes if needed
     }
   };
 

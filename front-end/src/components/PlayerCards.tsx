@@ -3,7 +3,10 @@ import { Player } from "../@types/users";
 
 interface CardsProps {
   player: Player | undefined;
-  handleDeletePlayer: any;
+  handleDeletePlayer: (
+    playerId: string,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => void;
 }
 
 const Cards: React.FC<CardsProps> = ({ player, handleDeletePlayer }) => {
@@ -19,7 +22,10 @@ const Cards: React.FC<CardsProps> = ({ player, handleDeletePlayer }) => {
       }}
     >
       <div className="cardContainer2">
-        <Button onClick={handleDeletePlayer} variant="danger">
+        <Button
+          onClick={(e) => handleDeletePlayer(player._id, e)}
+          variant="danger"
+        >
           DELETE
         </Button>
         <p className="ovr2">{player.overall}</p>

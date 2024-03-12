@@ -236,10 +236,10 @@ const deletePlayer = async (req, res) => {
       return true;
     });
     req.user.save();
-    const deletePlayer = await PlayersModel.findByIdAndUpdate(playerId, {
+    const deletedPlayer = await PlayersModel.findByIdAndUpdate(playerId, {
       playerOwner: null,
     });
-    res.status(200).json({ message: "Player deleted" });
+    res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Something went wrong" });

@@ -59,15 +59,7 @@ function User() {
 
   const handleDeletePlayer = async (playerId: string) => {
     try {
-      const selectedPlayer = user?.favPlayer?.find(
-        (player) => player._id === playerId
-      );
-      console.log("selectedPlayer :>> ", selectedPlayer);
-      if (selectedPlayer) {
-        await deletePlayer(playerId); // Pass playerId directly to deletePlayer
-      } else {
-        console.error("Player not found in the favorite list.");
-      }
+      await deletePlayer(playerId);
     } catch (error) {
       console.error("Error deleting player:", error);
     }
