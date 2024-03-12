@@ -9,10 +9,16 @@ const getUsers = async (req, res) => {
   try {
     const allUsers = await UserModel.find({}).select("-password");
     res.status(200).json(allUsers);
+    console.log("allUsers :>> ", allUsers);
   } catch (e) {
     console.log(e);
     res.status(500).json({ error: "server error" });
   }
+};
+
+const test = (req, res) => {
+  console.log("testing successful");
+  res.send("testing successful");
 };
 
 const administrator = async (req, res) => {
@@ -27,6 +33,7 @@ const getUserByEmail = async (req, res) => {
     });
     if (foundUser) {
       return res.status(200).json(foundUser);
+      console.log("founduser :>> ", founduser);
     } else {
       res.status(404).json({ error: "No user found" });
     }

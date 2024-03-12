@@ -10,12 +10,14 @@ import {
   deletePlayer,
   updateUserList,
   administrator,
+  test,
 } from "../controllers/userController.js";
 import jwtAuth from "../middlewares/jwtAuth.js";
 import adminCheck from "../middlewares/adminCheck.js";
 
 const userRouter = express.Router();
 
+userRouter.get("/test", test);
 userRouter.get("/find/:email", getUserByEmail);
 userRouter.get("/all", getUsers);
 userRouter.get("/profile", jwtAuth, getProfile);
