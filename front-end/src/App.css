@@ -30,9 +30,9 @@ body {
 .siteMenu {
   background-color: rgba(255, 255, 255, 0.837);
   /* border-top: 2px solid rgb(3, 2, 2); */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-around !important;
   transition: all 0.5s;
   /* border-bottom: 2px solid rgb(11, 10, 10); */
   height: 50px;
@@ -40,9 +40,9 @@ body {
 }
 
 .link {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
   color: rgba(52, 116, 227, 0.9);
   font-weight: bold;
   text-decoration: none;
@@ -65,11 +65,6 @@ body {
   margin: 0;
   padding: 0 100px;
 }
-
-/* .siteMenu > .link > .active {
-  background-color: rgba(100, 124, 164, 0.537);
-  color: #000;
-} */
 
 .content-container {
   display: flex;

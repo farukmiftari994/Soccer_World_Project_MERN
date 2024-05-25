@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 
 function SiteMenu({ children }: { children: React.ReactNode }): JSX.Element {
   const { user } = useContext(AuthContext);
+
   const menuItem = [
     {
       path: "/",
