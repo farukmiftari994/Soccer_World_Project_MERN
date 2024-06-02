@@ -1,4 +1,5 @@
 {
+  "proxy": "https://api.football-data.org",
   "name": "back-end",
   "version": "1.0.0",
   "description": "",
