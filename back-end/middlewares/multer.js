@@ -24,8 +24,6 @@ const fileFilter = (req, file, cb) => {
     console.log("File Accepted");
     cb(null, true);
   }
-
-  //   cb(new Error("I dont have a clue"));
 };
 
 const multerUpload = multer({ storage, fileFilter });

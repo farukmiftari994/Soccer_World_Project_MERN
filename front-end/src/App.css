@@ -394,9 +394,7 @@ select {
   color: #538af1 !important;
 }
 
-@media screen and (min-width: 2100px) {
-  /* Adjust background image */
-
+@media screen and (min-width: 2100px) and (min-width: 2600px) {
   body {
     height: 100vh;
   }
@@ -476,7 +474,6 @@ select {
 }
 
 @media screen and (max-width: 1400px) {
-  /* Adjust background image */
   input,
   select {
     margin: 5px 0 !important;

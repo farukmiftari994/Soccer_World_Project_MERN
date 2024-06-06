@@ -43,7 +43,6 @@ function SiteMenu({ children }: { children: React.ReactNode }): JSX.Element {
     <div>
       <div className="siteMenu ">
         {menuItem.map((item, index) => {
-          // console.log("maping sitemenu");
           if (item.restricted && user?.role !== "admin") return;
           else {
             return (
