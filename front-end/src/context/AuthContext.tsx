@@ -194,7 +194,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       const response = await fetch(`${baseUrl}/api/users/signup`, options);
       if (response.ok) {
         const result = (await response.json()) as SignupResponse;
-        // console.log("this is the one :>> ", result);
         setUser(result.user as User);
       } else {
         const result = (await response.json()) as ResNotOk;

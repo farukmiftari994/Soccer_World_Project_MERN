@@ -29,12 +29,10 @@ body {
 
 .siteMenu {
   background-color: rgba(255, 255, 255, 0.837);
-  /* border-top: 2px solid rgb(3, 2, 2); */
   display: flex !important;
   flex-direction: row !important;
   justify-content: space-around !important;
-  transition: all 0.5s;
-  /* border-bottom: 2px solid rgb(11, 10, 10); */
+  transition: all 1s;
   height: 50px;
   overflow-x: hidden;
 }
@@ -61,7 +59,7 @@ body {
 .link:hover {
   background: rgba(52, 116, 227, 0.549);
   color: rgb(247, 250, 252);
-  transition: all 2s;
+  transition: all 4s;
   margin: 0;
   padding: 0 100px;
 }
