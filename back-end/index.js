@@ -27,7 +27,7 @@ const addMiddlewares = () => {
 const addRoutes = () => {
   app.use("/api/users", userRouter);
   app.use("/api/players", playersRouter);
-  app.user("api/test", (req, res) => res.status(200).json({ error: "test" }));
+  app.use("api/test", (req, res) => res.status(200).json({ error: "test" }));
   app.use("*", (req, res) =>
     res.status(404).json({ error: "Endpoint not found." })
   );
