@@ -4,8 +4,6 @@ import path from "path";
 const storage = multer.diskStorage({});
 
 const fileFilter = (req, file, cb) => {
-  //   console.log("file :>> ", file);
-
   let extension = path.extname(file.originalname);
   console.log("extension :>> ", extension);
 

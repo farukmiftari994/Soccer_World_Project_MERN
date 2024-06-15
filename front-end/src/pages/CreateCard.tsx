@@ -18,11 +18,9 @@ function CreateCard() {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | undefined>(
     undefined
   );
-  // const [userId, setUserId] = useState(user?._id);
   const [playerId, setPlayerId] = useState("");
 
   console.log("user :>> ", user);
-  // console.log("hey", selectedPlayer);
 
   useEffect(() => {
     const fetchAllPlayers = () => {

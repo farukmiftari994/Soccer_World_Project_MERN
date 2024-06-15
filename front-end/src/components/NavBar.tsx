@@ -10,7 +10,6 @@ import { AuthContext } from "../context/AuthContext";
 function NavBar(): JSX.Element {
   const loginLogout = [{ path: "/login" }];
   const { user, logout } = useContext(AuthContext);
-  // console.log("user :>> ", user);
   const location = useLocation();
 
   return (

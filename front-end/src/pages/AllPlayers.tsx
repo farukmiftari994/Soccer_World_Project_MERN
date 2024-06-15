@@ -41,7 +41,6 @@ const AllPlayers = () => {
           throw new Error("Failed to fetch users");
         }
         const data = await response.json();
-        // console.log("qetu esht data :>> ", data);
 
         setCard(data); // Assuming data is an array of User objects
       } catch (error) {
