@@ -336,6 +336,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       if (response.ok) {
         const result = await response.json();
         console.log("Deleted player successfully:", result);
+
         //update user state
         setUser((prev) => {
           if (!prev) return prev;
@@ -388,8 +389,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     physicality: string,
     image: string
   ) => {
-    // if (!user && !player) return;
-
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     const body = new URLSearchParams();

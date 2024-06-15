@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
   //   filename: function (req, file, cb) {//!
   //     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);//!
   //     cb(null, file.filedname + "-" + uniqueSuffix);  //! we can use this function if we want the picture to have specific name plus the date and so on
-  //   },//!
+  //   },//!e
 });
 
 const fileFilter = (req, file, cb) => {
