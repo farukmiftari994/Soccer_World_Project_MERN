@@ -9,7 +9,6 @@ function Home() {
           src={image}
           alt=""
           style={{
-            // marginTop: "120px",
             width: "80%",
             height: "70%",
             margin: "70px",
