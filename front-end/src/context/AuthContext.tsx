@@ -110,8 +110,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   console.log("user :>> ", user);
   const [player, setPlayer] = useState<Player | null>(null);
   console.log("player :>> ", player);
-  // const [loading, setLoading] = useState(false);
-  // console.log("setLoading :>> ", setLoading);
 
   const navigateTo = useNavigate();
 
@@ -131,7 +129,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       const response = await fetch(`${baseUrl}/api/users/all`, requestOptions);
       if (response.ok) {
         const result = (await response.json()) as LoginResponse;
-        console.log("this is the one :>> ", result);
         setUser(result.data.user);
       } else {
         const result = (await response.json()) as ResNotOk;
@@ -175,7 +172,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const signup = async (email: string, password: string) => {
-    console.log("signup function triggered");
+    console.log("Signup function triggered");
     if (!email || !password) return alert("ALL field must be included");
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -223,7 +220,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       );
       if (response.ok) {
         const result = (await response.json()) as LoginResponse;
-        // setUser(result.data.user);
         if (result.data.token) {
           localStorage.setItem("token", result.data.token);
           setUser(result.data.user);
