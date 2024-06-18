@@ -1,7 +1,6 @@
 import { isValidObjectId } from "mongoose";
 import PlayersModel from "../models/playersModel.js";
 import { v2 as cloudinary } from "cloudinary";
-import { encryptPassword } from "../utils/encryptPassword.js";
 
 const getAllPlayers = async (req, res) => {
   try {
@@ -83,8 +82,6 @@ const updatePlayers = async (req, res) => {
 };
 
 const pictureUpload = async (req, res) => {
-  // console.log("req.file :>> ", req.file);
-
   if (!req.file) {
     res.status(500).json({ message: "File not Supported" });
   }

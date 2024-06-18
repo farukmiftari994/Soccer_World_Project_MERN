@@ -33,7 +33,6 @@ const getUserByEmail = async (req, res) => {
     });
     if (foundUser) {
       return res.status(200).json(foundUser);
-      console.log("founduser :>> ", founduser);
     } else {
       res.status(404).json({ error: "No user found" });
     }
@@ -302,7 +301,6 @@ const updateUserList = async (req, res) => {
       { playerOwner: userId },
       { new: true }
     );
-    // .populate({ path: "playerOwner" });
 
     res.status(201).json({
       updateUserWithPlayer,

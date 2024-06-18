@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 
-// const playerSchema = new mongoose.Schema({
-//   _id: { type: mongoose.Schema.Types.ObjectId, ref: "players" },
-//   name: String,
-//   value: String,
-// });
-
 const userSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },

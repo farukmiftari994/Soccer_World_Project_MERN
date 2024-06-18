@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   user: User | null;
-  // admin: User | null;
   player: Player | null;
   allUsers: () => void;
   getProfile: () => Promise<void>;
@@ -50,8 +49,6 @@ interface AuthContextType {
     physicality: string,
     image: string
   ) => Promise<void>;
-
-  // loading: boolean;
 }
 
 const defaultValue: AuthContextType = {
@@ -423,7 +420,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       } else {
         const result = await response.json();
         console.log(result);
-        // setUser(result);
       }
     } catch (error) {
       console.log(error);
@@ -437,9 +433,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const getProfile = async () => {
     const token = localStorage.getItem("token");
-    // if (!token) {
-    //   alert("you have to login first");
-    // }
+
     if (token) {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
@@ -456,13 +450,10 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         if (response.ok) {
           const result = (await response.json()) as LoginResponse;
 
-          // APIResponse<User>;
           console.log("result for getProfile", result);
           setUser(result.data.user);
-          // setLoading(false);
         }
       } catch (error) {
-        // setLoading(true);
         console.log("error ", error);
       }
     }
@@ -470,7 +461,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     getProfile();
-    // allUsers();
   }, []);
 
   // //? to run the "checkUserStatus()" function or the useEffect not only when wh refresh the page but
@@ -481,7 +471,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       value={{
         user,
         player,
-        // loading,
         allUsers,
         allPlayers,
         login,

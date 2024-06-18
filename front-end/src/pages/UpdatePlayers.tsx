@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import { Form } from "react-bootstrap";
 import baseUrl from "../../utils/baseurl";
 import UpdatePlayerCards from "../components/UpdatePlayerCards.tsx";
 import { Player } from "../@types/users.ts";
@@ -80,41 +79,6 @@ function UpdatePlayers() {
       ) : (
         <li>No players found</li>
       )}
-      {/* {players.map((player) => (
-        <div key={player._id}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div className="cardContainer">
-              <p className="ovr">{player.overall}</p>
-              <div className="divPosition">
-                <p className="position">{player.position}</p>
-              </div>
-              <img src={player.image} alt={player.name} />
-
-              <h5>{player.name}</h5>
-              <div className="ratings">
-                <div>
-                  <Form.Control
-                    value={player.name}
-                    type="text"
-                    onChange={(e) => {
-                      console.log("player :>> ", player);
-                      handleInputChange("name", e.target.value, player._id);
-                    }}
-                  />
-                 
-                </div>
-             
-              </div>
-            </div>
-            <button onClick={() => handleSubmit(player._id)}>Update</button>
-          </div>
-        </div>
-      ))} */}
     </div>
   );
 }
