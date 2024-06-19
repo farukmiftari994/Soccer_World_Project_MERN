@@ -74,7 +74,7 @@ function User() {
     return (
       <div className="content-container">
         <div
-          className="theForm"
+          className="theForm user"
           style={{ width: "900px", height: "600px", marginTop: "50px" }}
         >
           <Tabs
