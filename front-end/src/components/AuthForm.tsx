@@ -5,13 +5,9 @@ import { Button, Col, Form } from "react-bootstrap";
 type Props = {
   submitTitle: string;
   submit: (email: string, password: string) => Promise<void>;
-  isInput: boolean;
-  Tag: string;
-  ButtonTag: string;
 };
 
 const AuthForm = ({ submitTitle, submit }: Props) => {
-  // const { loading } = useContext(AuthContext);
   const [inputValues, setInputValues] = useState({ email: "", password: "" });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,11 +20,6 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues({ ...inputValues, [e.target.type]: e.target.value });
     //? ... (means rest operator)
-
-    // if (!inputValues.email || !inputValues.password) {
-    //   alert("Some fileds are missing");
-    //   return;
-    // }
   };
 
   return (
@@ -68,7 +59,6 @@ const AuthForm = ({ submitTitle, submit }: Props) => {
             width: "100%",
           }}
         >
-          {/* {loading ? "Loading..." : submitTitle} */}
           {submitTitle}
         </Button>
       </Form>

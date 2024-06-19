@@ -7,7 +7,6 @@ const generateToken = (userId) => {
   };
 
   //! SecretOrPRivateKey is our own password needed to generate and later validate the token
-  //! hide that password as an .env variable!! .. and make it complicated
 
   const signOrPrivateKey = process.env.TOKEN_SECRET_KEY;
 

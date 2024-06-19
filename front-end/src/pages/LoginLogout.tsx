@@ -16,22 +16,10 @@ function LoginLogout() {
           className="mb-3 d-flex justify-content-center"
         >
           <Tab eventKey="profile" title="SIGN IN">
-            <AuthForm
-              submitTitle="Login"
-              submit={login}
-              isInput={false}
-              Tag={""}
-              ButtonTag={""}
-            />
+            <AuthForm submitTitle="Login" submit={login} />
           </Tab>
           <Tab eventKey="home" title="SIGN UP">
-            <AuthForm
-              submitTitle="Sign Up"
-              submit={signup}
-              isInput={true}
-              Tag="input"
-              ButtonTag="button"
-            />
+            <AuthForm submitTitle="Sign Up" submit={signup} />
           </Tab>
         </Tabs>
       </div>

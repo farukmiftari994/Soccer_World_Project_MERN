@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+//library used for hashing password
 
 const encryptPassword = async (userPassword) => {
   try {
